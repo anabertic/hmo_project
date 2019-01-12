@@ -24,6 +24,49 @@ public class Group {
 		
 		overlap = new ArrayList<Group>();
 	}
+	
+	public void addOverlapGroup(Group group) {
+		this.overlap.add(group);
+	}
+	
+	public boolean isOverlapping(Group group) {
+		if (this.overlap.contains(group)) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public static boolean isOverlapping(Group group1, Group group2) {
+		return group1.isOverlapping(group2);
+	}
+	
+	public boolean isWithinHardLimits() {
+		if (this.studentsCnt < this.min || this.studentsCnt > this.max) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public static boolean isWithinHardLimits(Group group) {
+		return group.isWithinHardLimits();
+	}
+	
+	public boolean canAddStudent() {
+		if (this.studentsCnt >= this.max) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public static boolean canAddStudent(Group group) {
+		return group.canAddStudent();
+	}
+	
+	
+	// ----- GETTERS AND SETTERS -----
 
 	public int getGroupId() {
 		return groupId;
@@ -80,6 +123,29 @@ public class Group {
 	public void setOverlap(List<Group> overlap) {
 		this.overlap = overlap;
 	}
+
+	// ----- END GETTERS AND SETTERS -----
 	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + groupId;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Group other = (Group) obj;
+		if (groupId != other.groupId)
+			return false;
+		return true;
+	}
 	
 }

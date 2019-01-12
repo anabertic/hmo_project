@@ -1,4 +1,4 @@
-package fer.hmo;
+package fer.hmo.data;
 
 import java.awt.List;
 import java.io.BufferedReader;
@@ -11,7 +11,11 @@ import java.util.Arrays;
 
 public class ParsingUtils {
 	
-	public void studentFile(String path){
+	public parseInstance(int instance, State state) {
+		
+	}
+	
+	private void studentFile(String path){
 		BufferedReader br = null;
 		FileReader fr = null;
 

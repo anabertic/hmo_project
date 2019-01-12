@@ -4,12 +4,14 @@ public class Request {
 
 	private Student student;
 	private int activityId;
+	private Group currentGroup;
 	private Group requestedGroup;
 	private boolean satisfied;
 	
 	public Request(Student student, int activityId, Group requestedGroup) {
 		this.student = student;
 		this.activityId = activityId;
+		this.currentGroup = student.currentGroup;
 		this.requestedGroup = requestedGroup;
 		
 		this.satisfied = false;
@@ -47,6 +49,14 @@ public class Request {
 
 	public void setSatisfied(boolean satisfied) {
 		this.satisfied = satisfied;
+	}
+	
+	public Group getCurrentGroup() {
+		return currentGroup;
+	}
+
+	public void setCurrentGroup(Group currentGroup) {
+		this.currentGroup = currentGroup;
 	}
 	
 	// ----- END GETTERS AND SETTERS -----

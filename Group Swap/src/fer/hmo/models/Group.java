@@ -25,6 +25,17 @@ public class Group {
 		overlap = new ArrayList<Group>();
 	}
 	
+	public Group(Group group) {
+		this.groupId = group.getGroupId();
+		this.studentsCnt = group.getStudentsCnt();
+		this.min = group.getMin();
+		this.minPreferred = group.getMinPreferred();
+		this.max = group.getMax();
+		this.maxPreferred = group.getMaxPreferred();
+		
+		this.overlap = group.getOverlap();
+	}
+	
 	public void addOverlapGroup(Group group) {
 		this.overlap.add(group);
 	}

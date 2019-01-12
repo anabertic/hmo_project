@@ -7,14 +7,38 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import fer.hmo.models.Group;
+import fer.hmo.models.Request;
+import fer.hmo.models.Student;
+import fer.hmo.state.State;
+
 
 
 public class ParsingUtils {
 	
-	public parseInstance(int instance, State state) {
+	public static void parseInstance( State state) {
+
+		state.setGroups(createGroups(state.getLimitsFile(),state.getOverlapsFile()));
+		state.setStudents(createStudents(state.getStudentsFile()));
+		state.setRequests(createRequests(state.getRequestsFile()));
 		
 	}
-	
+
+	private static ArrayList<Request> createRequests(String requestsFile) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private static ArrayList<Student> createStudents(String studentsFile) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private static ArrayList<Group> createGroups(String limitsFile, String overlapsFile) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	private void studentFile(String path){
 		BufferedReader br = null;
 		FileReader fr = null;

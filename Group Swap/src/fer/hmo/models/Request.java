@@ -11,7 +11,7 @@ public class Request {
 	public Request(Student student, int activityId, Group requestedGroup) {
 		this.student = student;
 		this.activityId = activityId;
-		this.currentGroup = student.currentGroup;
+		this.currentGroup = student.getGroups().get(student.getActivityIds().indexOf(this.activityId));
 		this.requestedGroup = requestedGroup;
 		
 		this.satisfied = false;

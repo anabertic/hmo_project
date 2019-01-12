@@ -1,10 +1,16 @@
 package fer.hmo;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 import fer.hmo.algorithms.random.RandomSearch;
+import fer.hmo.data.ParsingUtils;
+import fer.hmo.models.Group;
+import fer.hmo.state.State;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		// parse arguments
 		//meta...
 		// -timeout 600 -> number of seconds for algorithm to run
@@ -52,6 +58,10 @@ public class Main {
 		System.out.println();
 		System.out.println("With ArgumentParser...");
 		ParsedArguments parsedArguments = ArgumentsParser.parseArguments(args);
+		State state = new State(parsedArguments);
+		ArrayList<Group> groups = ParsingUtils.createGroups(state);
+		//System.out.println(groups.size());
+		
 		System.out.println(parsedArguments);
 		
 		

@@ -17,18 +17,40 @@ public class ParsingUtils {
 
 	public static void parseInstance(State state) throws IOException {
 
-		state.setGroups(createGroups(state));//state.getLimitsFile(), state.getOverlapsFile()));
+		state.setGroups(createGroups(state));
+		updateGroupOverlaps(state);
 		state.setStudents(createStudents(state.getStudentsFile()));
 		state.setRequests(createRequests(state.getRequestsFile()));
 
 	}
 
-	static ArrayList<Group> createGroups(State state) throws IOException {
+	private static void updateGroupOverlaps(State state) throws NumberFormatException, IOException {
+		BufferedReader br2 = new BufferedReader(new FileReader(state.getOverlapsFile()));
+		String line2;
+		for (Group group : state.getGroups()) {
+			br2.readLine();
+			ArrayList<Group> overlap = new ArrayList<Group>();
+			while ((line2 = br2.readLine()) != null) {
+				
+				if (Integer.parseInt(line2.split(",")[0]) == group.getGroupId()) {
+				
+					overlap.add(state.findGroupById(Integer.parseInt(line2.split(",")[1])));
+				}
+				
+			}
+			group.setOverlap(overlap);
+			br2 = new BufferedReader(new FileReader(state.getOverlapsFile()));
+
+		}
+		
+	}
+
+	public static ArrayList<Group> createGroups(State state) throws IOException {
 		ArrayList<Group> groups = new ArrayList<Group>();
 		BufferedReader br = new BufferedReader(new FileReader(state.getLimitsFile()));
-		BufferedReader br2 = new BufferedReader(new FileReader(state.getOverlapsFile()));
+		
 		br.readLine();
-		br2.readLine();
+		
 		String line;
 		String line2;
 
@@ -40,22 +62,15 @@ public class ParsingUtils {
 		}
 
 		// assigning overlap list to each group
-		for (Group group : groups) {
-			ArrayList<Group> overlap = new ArrayList<Group>();
-			while ((line2 = br2.readLine()) != null) {
-				if (Integer.parseInt(line2.split(",")[0]) == group.getGroupId()) {
-					overlap.add(state.findGroupById(Integer.parseInt(line2.split(",")[1])));
-				}
-			}
-
-		}
+	
 		return groups;
 
 	}
 
 	private static ArrayList<Student> createStudents(String studentsFile) {
+		ArrayList<Student> students = new ArrayList<>();
 		// TODO Auto-generated method stub
-		return null;
+		return students;
 	}
 
 	private static ArrayList<Request> createRequests(String requestsFile) {
@@ -63,43 +78,6 @@ public class ParsingUtils {
 		return null;
 	}
 
-	private void studentFile(String path) {
-		BufferedReader br = null;
-		FileReader fr = null;
-
-		try {
-
-			// br = new BufferedReader(new FileReader(FILENAME));
-			fr = new FileReader(path);
-			br = new BufferedReader(fr);
-
-			String sCurrentLine;
-			ArrayList<String> items = new ArrayList<>();
-			while ((sCurrentLine = br.readLine()) != null) {
-				ArrayList<String> list = new ArrayList<String>(Arrays.asList(sCurrentLine.split(",")));
-			}
-
-		} catch (IOException e) {
-
-			e.printStackTrace();
-
-		} finally {
-
-			try {
-
-				if (br != null)
-					br.close();
-
-				if (fr != null)
-					fr.close();
-
-			} catch (IOException ex) {
-
-				ex.printStackTrace();
-
-			}
-
-		}
-	}
+	
 
 }

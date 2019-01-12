@@ -3,17 +3,20 @@ package fer.hmo.state;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
+import fer.hmo.ParsedArguments;
 import fer.hmo.data.ParsingUtils;
 import fer.hmo.models.Group;
 import fer.hmo.models.Request;
 import fer.hmo.models.Student;
 
 public class State {
-
-	private String[] args;
+	
+	private ParsedArguments args;
+	
 	private int timeout;
-	private int[] awardActivity;
+	private List<Integer> awardActivity;
 	private int awardStudent;
 	private int minmmaxPen;
 	private String studentsFile;
@@ -27,19 +30,21 @@ public class State {
 	private ArrayList<Student> students;
 	private ArrayList<Request> requests;
 
-	public State(String[] args) throws IOException {
-		this.timeout = Integer.parseInt(args[0]);
-		this.awardActivity = Arrays.stream(args[1].split(",")).mapToInt(Integer::parseInt).toArray();
-		this.awardStudent = Integer.parseInt(args[2]);
-		this.minmmaxPen = Integer.parseInt(args[3]);
-		this.studentsFile = args[4];
-		this.requestsFile = args[5];
-		this.overlapsFile = args[6];
-		this.limitsFile = args[7];
+	public State(ParsedArguments args) throws IOException {
+		this.args = args;
+		this.timeout = args.getTimeout();
+		this.awardActivity = args.getAwardActivity();
+		this.awardStudent = args.getAwardStudent();
+		this.minmmaxPen = args.getMinmaxPenalty();
+		this.studentsFile = args.getStudentsFile();
+		this.requestsFile = args.getRequestsFile();
+		this.overlapsFile = args.getOverlapsFile();
+		this.limitsFile = args.getLimitsFile();
 
 		ParsingUtils.parseInstance(this);
 
 	}
+	
 	
 	// GROUP HELPERS
 
@@ -63,11 +68,11 @@ public class State {
 		this.timeout = timeout;
 	}
 
-	public int[] getAwardActivity() {
+	public List<Integer> getAwardActivity() {
 		return awardActivity;
 	}
 
-	public void setAwardActivity(int[] awardActivity) {
+	public void setAwardActivity(List<Integer> awardActivity) {
 		this.awardActivity = awardActivity;
 	}
 

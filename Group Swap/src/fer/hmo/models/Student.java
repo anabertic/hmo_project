@@ -20,6 +20,19 @@ public class Student {
 		this.newGroups = new ArrayList<>();
 	}
 	
+	public void add(int activityId, int swapWeight, Group group) {
+		this.activityIds.add(activityId);
+		this.swapWeights.add(swapWeight);
+		this.groups.add(group);
+		
+		this.newGroups.add(new Group(group));
+	}
+	
+	public void applyRequest(Request request) {
+		this.newGroups.set(this.activityIds.indexOf(request.getActivityId()), request.getRequestedGroup());
+		request.setSatisfied(true);
+	}
+	
 	// ----- GETTERS AND SETTERS -----
 
 	public int getStudentId() {

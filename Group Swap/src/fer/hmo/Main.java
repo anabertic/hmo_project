@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import fer.hmo.algorithms.random.RandomSearch;
 import fer.hmo.data.ParsingUtils;
 import fer.hmo.models.Group;
+import fer.hmo.models.Student;
 import fer.hmo.state.State;
 
 public class Main {
@@ -59,10 +60,21 @@ public class Main {
 		System.out.println("With ArgumentParser...");
 		ParsedArguments parsedArguments = ArgumentsParser.parseArguments(args);
 		State state = new State(parsedArguments);
-		ArrayList<Group> groups = ParsingUtils.createGroups(state);
-		//System.out.println(groups.size());
 		
-		System.out.println(parsedArguments);
+
+		for (Group g:state.getGroups()){
+			System.out.println("Group "+g.getGroupId());
+			System.out.println(g.getOverlap().toString());
+		}
+		for (Student s:state.getStudents()){
+			System.out.println("Student "+s.getStudentId());
+			System.out.println(s.getActivityIds().toString());
+			System.out.println(s.getSwapWeights().toString());
+			System.out.println(s.getGroups().toString());
+			System.out.println(s.getNewGroups().toString());
+			
+		}
+		//System.out.println(parsedArguments);
 		
 		
 		

@@ -7,6 +7,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import fer.hmo.models.Group;
 import fer.hmo.models.Request;
@@ -17,60 +19,68 @@ public class ParsingUtils {
 
 	public static void parseInstance(State state) throws IOException {
 
-		state.setGroups(createGroups(state));
+		createGroups(state);
 		updateGroupOverlaps(state);
-		state.setStudents(createStudents(state.getStudentsFile()));
+		createStudents(state);
 		state.setRequests(createRequests(state.getRequestsFile()));
 
 	}
 
-	private static void updateGroupOverlaps(State state) throws NumberFormatException, IOException {
-		BufferedReader br2 = new BufferedReader(new FileReader(state.getOverlapsFile()));
-		String line2;
-		for (Group group : state.getGroups()) {
-			br2.readLine();
-			ArrayList<Group> overlap = new ArrayList<Group>();
-			while ((line2 = br2.readLine()) != null) {
-				
-				if (Integer.parseInt(line2.split(",")[0]) == group.getGroupId()) {
-				
-					overlap.add(state.findGroupById(Integer.parseInt(line2.split(",")[1])));
-				}
-				
-			}
-			group.setOverlap(overlap);
-			br2 = new BufferedReader(new FileReader(state.getOverlapsFile()));
-
-		}
-		
-	}
 
 	public static ArrayList<Group> createGroups(State state) throws IOException {
 		ArrayList<Group> groups = new ArrayList<Group>();
 		BufferedReader br = new BufferedReader(new FileReader(state.getLimitsFile()));
-		
-		br.readLine();
-		
+		br.readLine();	
 		String line;
-		String line2;
-
 		// filling in group list
 		while ((line = br.readLine()) != null) {
 			int[] params = Arrays.stream(line.split(",")).mapToInt(Integer::parseInt).toArray();
-			groups.add(new Group(params[0], params[1], params[2], params[3], params[4], params[5]));
+			state.addGroup(new Group(params[0], params[1], params[2], params[3], params[4], params[5]));
 
 		}
-
-		// assigning overlap list to each group
-	
 		return groups;
 
 	}
 
-	private static ArrayList<Student> createStudents(String studentsFile) {
-		ArrayList<Student> students = new ArrayList<>();
-		// TODO Auto-generated method stub
-		return students;
+	private static void updateGroupOverlaps(State state) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new FileReader(state.getOverlapsFile()));
+		String line;
+		for (Group group : state.getGroups()) {
+			br.readLine();
+			ArrayList<Group> overlap = new ArrayList<Group>();
+			while ((line = br.readLine()) != null) {				
+				if (Integer.parseInt(line.split(",")[0]) == group.getGroupId()) {				
+					overlap.add(state.findGroupById(Integer.parseInt(line.split(",")[1])));
+				}			
+			}
+			group.setOverlap(overlap);
+			br = new BufferedReader(new FileReader(state.getOverlapsFile()));
+		}		
+	}
+	
+	private static void createStudents(State state) throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader(state.getStudentsFile()));
+		br.readLine();	
+		String line;
+		
+		while ((line = br.readLine()) != null) {
+			int studentId = Integer.parseInt(line.split(",")[0]);
+			int activityId = Integer.parseInt(line.split(",")[1]);
+			int swapWeight = Integer.parseInt(line.split(",")[2]);
+			int group = Integer.parseInt(line.split(",")[3]);
+			//int newGroup = Integer.parseInt(line.split(",")[4]);
+			
+			Student student = state.findStudentById(studentId);
+			if (student == null){
+				student = new Student(studentId);
+				student.add(activityId, swapWeight, state.findGroupById(group));				
+				state.addStudent(student);
+			}
+			else{
+				student.add(activityId, swapWeight, state.findGroupById(group));
+			}		
+		}
+		
 	}
 
 	private static ArrayList<Request> createRequests(String requestsFile) {

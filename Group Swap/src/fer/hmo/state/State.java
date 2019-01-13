@@ -26,9 +26,9 @@ public class State {
 
 	private int maxScore;
 
-	private ArrayList<Group> groups;
-	private ArrayList<Student> students;
-	private ArrayList<Request> requests;
+	private ArrayList<Group> groups = new ArrayList<Group>();
+	private ArrayList<Student> students = new ArrayList<Student>();
+	private ArrayList<Request> requests = new ArrayList<Request>();
 
 	public State(ParsedArguments args) throws IOException {
 		this.args = args;
@@ -46,7 +46,7 @@ public class State {
 	}
 	
 	
-	// GROUP HELPERS
+	//  HELPERS
 
 	public Group findGroupById(int groupId) {
 		for (Group group : this.groups) {
@@ -55,6 +55,17 @@ public class State {
 			}
 		}
 		return null;
+
+	}
+	
+	public Student findStudentById(int studentId) {
+		Student student = null;
+		for (Student s : this.students) {
+			if (s.getStudentId() == studentId) {
+				student = s;
+			}
+		}
+		return student;
 
 	}
 
@@ -154,6 +165,14 @@ public class State {
 
 	public void setRequests(ArrayList<Request> requests) {
 		this.requests = requests;
+	}
+	
+	public void addGroup(Group group){
+		this.groups.add(group);
+	}
+	
+	public void addStudent(Student student){
+		this.students.add(student);
 	}
 
 }

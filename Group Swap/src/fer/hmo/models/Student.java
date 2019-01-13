@@ -74,6 +74,13 @@ public class Student {
 	public void setNewGroups(List<Group> newGroups) {
 		this.newGroups = newGroups;
 	}
+
+	@Override
+	public String toString() {
+		return "Student [studentId=" + studentId + "]";
+	}
 	
 	// ----- END GETTERS AND SETTERS -----
+	
+	
 }

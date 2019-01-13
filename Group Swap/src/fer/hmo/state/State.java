@@ -167,12 +167,18 @@ public class State {
 		this.requests = requests;
 	}
 	
+	// ADDERS 
+	
 	public void addGroup(Group group){
 		this.groups.add(group);
 	}
 	
 	public void addStudent(Student student){
 		this.students.add(student);
+	}
+	
+	public void addRequest(Request request){
+		this.requests.add(request);
 	}
 
 }

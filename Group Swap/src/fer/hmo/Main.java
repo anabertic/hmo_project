@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import fer.hmo.algorithms.random.RandomSearch;
 import fer.hmo.data.ParsingUtils;
 import fer.hmo.models.Group;
+import fer.hmo.models.Request;
 import fer.hmo.models.Student;
 import fer.hmo.state.State;
 
@@ -73,6 +74,12 @@ public class Main {
 			System.out.println(s.getGroups().toString());
 			System.out.println(s.getNewGroups().toString());
 			
+		}
+		for (Request r:state.getRequests()){
+			System.out.println("Request: ");
+			System.out.println(r.getStudent().toString());
+			System.out.println("current "+r.getCurrentGroup().toString());
+			System.out.println("requested "+r.getRequestedGroup().toString());
 		}
 		//System.out.println(parsedArguments);
 		

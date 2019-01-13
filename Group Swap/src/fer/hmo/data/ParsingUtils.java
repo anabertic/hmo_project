@@ -1,14 +1,10 @@
 package fer.hmo.data;
 
-import java.awt.List;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 import fer.hmo.models.Group;
 import fer.hmo.models.Request;
@@ -21,10 +17,9 @@ public class ParsingUtils {
 
 		createGroups(state);
 		createStudents(state);
-		state.setRequests(createRequests(state.getRequestsFile()));
+		createRequests(state);
 
 	}
-
 
 	public static void createGroups(State state) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(state.getLimitsFile()));
@@ -47,7 +42,10 @@ public class ParsingUtils {
 			}
 			group.setOverlap(overlap);
 			br2 = new BufferedReader(new FileReader(state.getOverlapsFile()));
-		}		
+		}
+		
+		br.close();
+		br2.close();
 	}
 	
 	private static void createStudents(State state) throws IOException {
@@ -73,11 +71,23 @@ public class ParsingUtils {
 			}		
 		}
 		
+		br.close();
+		
 	}
 
-	private static ArrayList<Request> createRequests(String requestsFile) {
-		// TODO Auto-generated method stub
-		return null;
+	private static void createRequests(State state) throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader(state.getRequestsFile()));
+		br.readLine();	
+		String line;
+		
+		while ((line = br.readLine()) != null) {
+			int studentId = Integer.parseInt(line.split(",")[0]);
+			int activityId = Integer.parseInt(line.split(",")[1]);
+			int groupId = Integer.parseInt(line.split(",")[2]);
+			state.addRequest(new Request(state.findStudentById(studentId),activityId,state.findGroupById(groupId)));
+		}
+		
+		br.close();
 	}
 
 	

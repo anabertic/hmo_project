@@ -20,41 +20,33 @@ public class ParsingUtils {
 	public static void parseInstance(State state) throws IOException {
 
 		createGroups(state);
-		updateGroupOverlaps(state);
 		createStudents(state);
 		state.setRequests(createRequests(state.getRequestsFile()));
 
 	}
 
 
-	public static ArrayList<Group> createGroups(State state) throws IOException {
-		ArrayList<Group> groups = new ArrayList<Group>();
+	public static void createGroups(State state) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(state.getLimitsFile()));
-		br.readLine();	
+		BufferedReader br2 = new BufferedReader(new FileReader(state.getOverlapsFile()));
+		br.readLine();
+		br2.readLine();
 		String line;
-		// filling in group list
+		String line2;
 		while ((line = br.readLine()) != null) {
 			int[] params = Arrays.stream(line.split(",")).mapToInt(Integer::parseInt).toArray();
 			state.addGroup(new Group(params[0], params[1], params[2], params[3], params[4], params[5]));
-
-		}
-		return groups;
-
-	}
-
-	private static void updateGroupOverlaps(State state) throws NumberFormatException, IOException {
-		BufferedReader br = new BufferedReader(new FileReader(state.getOverlapsFile()));
-		String line;
+		}		
 		for (Group group : state.getGroups()) {
-			br.readLine();
+			br2.readLine();
 			ArrayList<Group> overlap = new ArrayList<Group>();
-			while ((line = br.readLine()) != null) {				
-				if (Integer.parseInt(line.split(",")[0]) == group.getGroupId()) {				
-					overlap.add(state.findGroupById(Integer.parseInt(line.split(",")[1])));
+			while ((line2 = br2.readLine()) != null) {				
+				if (Integer.parseInt(line2.split(",")[0]) == group.getGroupId()) {				
+					overlap.add(state.findGroupById(Integer.parseInt(line2.split(",")[1])));
 				}			
 			}
 			group.setOverlap(overlap);
-			br = new BufferedReader(new FileReader(state.getOverlapsFile()));
+			br2 = new BufferedReader(new FileReader(state.getOverlapsFile()));
 		}		
 	}
 	

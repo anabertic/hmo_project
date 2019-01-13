@@ -27,12 +27,7 @@ public class Student {
 		
 		this.newGroups.add(new Group(group));
 	}
-	
-	public void applyRequest(Request request) {
-		this.newGroups.set(this.activityIds.indexOf(request.getActivityId()), request.getRequestedGroup());
-		request.setSatisfied(true);
-	}
-	
+		
 	// ----- GETTERS AND SETTERS -----
 
 	public int getStudentId() {

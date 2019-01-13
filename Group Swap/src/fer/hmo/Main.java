@@ -62,31 +62,12 @@ public class Main {
 		ParsedArguments parsedArguments = ArgumentsParser.parseArguments(args);
 		State state = new State(parsedArguments);
 		
-
-		for (Group g:state.getGroups()){
-			System.out.println("Group "+g.getGroupId());
-			System.out.println(g.getOverlap().toString());
-		}
-		for (Student s:state.getStudents()){
-			System.out.println("Student "+s.getStudentId());
-			System.out.println(s.getActivityIds().toString());
-			System.out.println(s.getSwapWeights().toString());
-			System.out.println(s.getGroups().toString());
-			System.out.println(s.getNewGroups().toString());
-			
-		}
-		for (Request r:state.getRequests()){
-			System.out.println("Request: ");
-			System.out.println(r.getStudent().toString());
-			System.out.println("current "+r.getCurrentGroup().toString());
-			System.out.println("requested "+r.getRequestedGroup().toString());
-		}
+		state.printState();
 		//System.out.println(parsedArguments);
-		
-		
-		
-		
-		//RandomSearch randomSearch = new RandomSearch(args);
+
+		RandomSearch randomSearch = new RandomSearch(state);
+		randomSearch.search();
+		state.printState();
 		
 	}
 

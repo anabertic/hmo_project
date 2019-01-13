@@ -17,6 +17,12 @@ public class Request {
 		this.satisfied = false;
 	}
 	
+	public void apply(){
+		Student s = this.getStudent();
+		s.getNewGroups().set(s.getActivityIds().indexOf(this.getActivityId()), this.getRequestedGroup());
+		this.setSatisfied(true);
+	}
+	
 	// ----- GETTERS AND SETTERS -----
 
 	public Student getStudent() {

@@ -49,12 +49,13 @@ public class State {
 	//  HELPERS
 
 	public Group findGroupById(int groupId) {
-		for (Group group : this.groups) {
-			if (group.getGroupId() == groupId) {
-				return group;
+		Group group = null;
+		for (Group g : this.groups) {
+			if (g.getGroupId() == groupId) {
+				group = g;
 			}
 		}
-		return null;
+		return group;
 
 	}
 	
@@ -181,4 +182,28 @@ public class State {
 		this.requests.add(request);
 	}
 
+	
+	public void printState(){
+
+		for (Group g:this.getGroups()){
+			System.out.println("Group "+g.getGroupId());
+			System.out.println(g.getOverlap().toString());
+		}
+		System.out.println();
+		for (Student s:this.getStudents()){
+			System.out.println("Student "+s.getStudentId());
+			System.out.println(s.getActivityIds().toString());
+			System.out.println(s.getSwapWeights().toString());
+			System.out.println(s.getGroups().toString());
+			System.out.println(s.getNewGroups().toString());
+			
+		}
+		System.out.println();
+		for (Request r:this.getRequests()){
+			System.out.println("Request: ");
+			System.out.println(r.getStudent().toString());
+			System.out.println("current "+r.getCurrentGroup().toString());
+			System.out.println("requested "+r.getRequestedGroup().toString());
+		}
+	}
 }

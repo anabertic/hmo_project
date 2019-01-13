@@ -85,16 +85,14 @@ public class Group {
 	}
 	
 	public static boolean canRemoveStudent(Group group) {
-		return group.canAddStudent();
+		return group.canRemoveStudent();
 	}
 	
 	public static void addStudent(Group group){
-		if (canAddStudent(group))
 			group.setStudentsCnt(group.getStudentsCnt()+1);
 	}
 	
 	public static void removeStudent(Group group){
-		if (canRemoveStudent(group))
 		group.setStudentsCnt(group.getStudentsCnt()-1);
 	}
 	

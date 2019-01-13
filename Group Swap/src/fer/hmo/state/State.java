@@ -25,6 +25,7 @@ public class State {
 	private String limitsFile;
 
 	private int maxScore;
+	private int score;
 
 	private ArrayList<Group> groups = new ArrayList<Group>();
 	private ArrayList<Student> students = new ArrayList<Student>();
@@ -42,6 +43,8 @@ public class State {
 		this.limitsFile = args.getLimitsFile();
 
 		ParsingUtils.parseInstance(this);
+		
+		this.score = 0;
 
 	}
 	
@@ -144,6 +147,14 @@ public class State {
 		this.maxScore = maxScore;
 	}
 
+	public int score() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+	
 	public ArrayList<Group> getGroups() {
 		return groups;
 	}

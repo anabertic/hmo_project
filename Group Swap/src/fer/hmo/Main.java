@@ -69,6 +69,7 @@ public class Main {
 		randomSearch.search();
 		state.printState();
 		
+		
 	}
 
 }

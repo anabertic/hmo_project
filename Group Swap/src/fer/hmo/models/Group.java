@@ -76,6 +76,28 @@ public class Group {
 		return group.canAddStudent();
 	}
 	
+	public boolean canRemoveStudent() {
+		if (this.studentsCnt <= this.min) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public static boolean canRemoveStudent(Group group) {
+		return group.canAddStudent();
+	}
+	
+	public static void addStudent(Group group){
+		if (canAddStudent(group))
+			group.setStudentsCnt(group.getStudentsCnt()+1);
+	}
+	
+	public static void removeStudent(Group group){
+		if (canRemoveStudent(group))
+		group.setStudentsCnt(group.getStudentsCnt()-1);
+	}
+	
 	
 	// ----- GETTERS AND SETTERS -----
 

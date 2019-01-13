@@ -25,7 +25,7 @@ public class State {
 	private String limitsFile;
 
 	private int maxScore;
-	private int score;
+	private int scoreA;
 
 	private ArrayList<Group> groups = new ArrayList<Group>();
 	private ArrayList<Student> students = new ArrayList<Student>();
@@ -44,10 +44,31 @@ public class State {
 
 		ParsingUtils.parseInstance(this);
 		
-		this.score = 0;
+		this.scoreA = 0;
 
 	}
 	
+	public void swap(Request request){
+		
+		// TODO check if overlaps 
+		// TODO check if within hard limits
+		
+		request.apply();
+		
+		this.updateGroupStudentsCnt(request);
+
+		Evaluation.updateScore(this, request);
+	}
+	
+	public void updateGroupStudentsCnt(Request request){
+		int groupIndexRequested = this.groups.indexOf(request.getRequestedGroup());
+		Group.addStudent(request.getRequestedGroup());
+		this.groups.set(groupIndexRequested, request.getRequestedGroup());
+		
+		int groupIndexCurrent= this.groups.indexOf(request.getCurrentGroup());
+		Group.removeStudent(request.getRequestedGroup());
+		this.groups.set(groupIndexCurrent, request.getCurrentGroup());
+	}
 	
 	//  HELPERS
 
@@ -59,8 +80,8 @@ public class State {
 			}
 		}
 		return group;
-
 	}
+	
 	
 	public Student findStudentById(int studentId) {
 		Student student = null;
@@ -147,12 +168,12 @@ public class State {
 		this.maxScore = maxScore;
 	}
 
-	public int score() {
-		return score;
+	public int getScoreA() {
+		return scoreA;
 	}
 
-	public void setScore(int score) {
-		this.score = score;
+	public void setScoreA(int scoreA) {
+		this.scoreA = scoreA;
 	}
 	
 	public ArrayList<Group> getGroups() {
@@ -199,6 +220,7 @@ public class State {
 		for (Group g:this.getGroups()){
 			System.out.println("Group "+g.getGroupId());
 			System.out.println(g.getOverlap().toString());
+			System.out.println("students cnt "+g.getStudentsCnt());
 		}
 		System.out.println();
 		for (Student s:this.getStudents()){

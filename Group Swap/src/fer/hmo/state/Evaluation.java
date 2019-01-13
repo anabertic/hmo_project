@@ -1,5 +1,7 @@
 package fer.hmo.state;
 
+import fer.hmo.models.Request;
+
 public class Evaluation {
 
 	public static int scoreA(State state) {
@@ -37,5 +39,27 @@ public class Evaluation {
 				- Evaluation.scoreE(state);
 		
 	}
+	
+	// NOT SURE ABOUT THIS
+	
+	public static void updateScore(State state,Request request){
+		updateScoreA(state,request);
+		//updateScoreB(state,request);
+		//updateScoreC(state,request);
+		//updateScoreD(state,request);
+		//updateScoreE(state,request);
+		
+	}
+	
+	public static void updateScoreA(State state, Request request){
+		int index = state.getStudents().indexOf(state.findStudentById(request.getStudent().getStudentId()));
+		int swapWeight = state.getStudents().get(index).getSwapWeights().get(index);
+		state.setScoreA(state.getScoreA()+swapWeight);
+	}
+	
+	public static void updateScoreD(State state, Request request){
+	
+	}
+	
 	
 }

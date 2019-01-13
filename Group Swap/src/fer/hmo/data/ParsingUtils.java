@@ -1,6 +1,7 @@
 package fer.hmo.data;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -77,6 +78,21 @@ public class ParsingUtils {
 
 	private static void createRequests(State state) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(state.getRequestsFile()));
+		br.readLine();	
+		String line;
+		
+		while ((line = br.readLine()) != null) {
+			int studentId = Integer.parseInt(line.split(",")[0]);
+			int activityId = Integer.parseInt(line.split(",")[1]);
+			int groupId = Integer.parseInt(line.split(",")[2]);
+			state.addRequest(new Request(state.findStudentById(studentId),activityId,state.findGroupById(groupId)));
+		}
+		
+		br.close();
+	}
+	
+	private static void writeNewGroups(State state) throws IOException{
+		BufferedReader br = new BufferedReader(new FileReader(state.getStudentsFile()));
 		br.readLine();	
 		String line;
 		

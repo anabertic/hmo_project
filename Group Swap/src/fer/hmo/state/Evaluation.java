@@ -90,31 +90,64 @@ public class Evaluation {
 	public int calculateScoreA() {
 		// based on state only
 		
+		// always 0 at the start since no request has been fulfilled yet
 		return 0;
 	}
 	
 	public int calculateScoreB() {
 		// based on state only
 		
+		// always 0 at the start since no request has been fulfilled yet
 		return 0;
 	}
 	
 	public int calculateScoreC() {
 		// based on state only
 		
+		// always 0 at the start since no request has been fulfilled yet
 		return 0;
 	}
 	
 	public int calculateScoreD() {
 		// based on state only
 		
-		return 0;
+		int scoreD = 0;
+		
+		// deduct state.getMinmmaxPen() number of points for every student in every group
+		// that contains a number of student below the minimum preferred limit
+		
+		int minPenalty = this.state.getMinmmaxPen();
+		for (Group group : this.state.getGroups()) {
+			int nStudents = group.getStudentsCnt();
+			int minPreferred = group.getMinPreferred();
+			
+			if (nStudents < minPreferred) {
+				scoreD += (minPreferred - nStudents) * minPenalty;
+			}
+		}
+		
+		return scoreD;
 	}
 	
 	public int calculateScoreE() {
 		// based on state only
 		
-		return 0;
+		int scoreE = 0;
+		
+		// deduct state.getMinmmaxPen() number of points for every student in every group
+		// that contains a number of student above the maximum preferred limit
+		
+		int maxPenalty = this.state.getMinmmaxPen();
+		for (Group group : this.state.getGroups()) {
+			int nStudents = group.getStudentsCnt();
+			int maxPreferred = group.getMaxPreferred();
+			
+			if (nStudents > maxPreferred) {
+				scoreD += (nStudents - maxPreferred) * maxPenalty;
+			}
+		}
+		
+		return scoreE;
 	}
 	
 	// ---- CALLED ON EVERY REQUEST TAKEN INTO CONSIDERATION ----

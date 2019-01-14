@@ -1,5 +1,8 @@
 package fer.hmo.state;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import fer.hmo.models.Request;
 import fer.hmo.models.Student;
 
@@ -96,7 +99,7 @@ public class Evaluation {
 		
 		// if it doesn't, increment scoreA by swap_value
 		// otherwise do nothing, score is already applied for that category
-		if (alreadySatisfiedForThatActivity) {
+		if (!alreadySatisfiedForThatActivity) {
 			scoreA += swapValue;
 		}
 		
@@ -104,8 +107,42 @@ public class Evaluation {
 	}
 	
 	public int calculateCandidateScoreB(Request request) {
+		int scoreB = this.scoreB;
 		
-		return 0;
+		// get number of already satisfied requests for a given student
+		Student student = request.getStudent();
+		int nSatisfied = student.getSatisfiedRequests().keySet().size();
+		
+		// find if the new request satisfies another activity
+		int activityId = request.getActivityId();
+		boolean alreadySatisfiedForThatActivity = student.existsSatisfiedRequestForActivity(activityId);
+		
+		// if the request is for an already satisfied activity do nothing, for points were already awarded
+		if (alreadySatisfiedForThatActivity) {
+			return scoreB;
+		}
+		// otherwise, compare nSatisfied + 1 with the award-activity list
+		List<Integer> awardActivity = state.getAwardActivity();
+		int awardActivityLength = awardActivity.size();
+		/*
+		[1, 2, 4]
+
+		0 -> 1 point
+		1 -> (2 - 1) = 1 point
+		2 -> (4 - 2) = 2 points
+		3 -> 0 points
+		*/
+		if (nSatisfied == 0 && awardActivityLength > 0) {
+			// "0 -> 1", if there were 0 satisfied, gain awardActivity[0] points
+			return scoreB + awardActivity.get(0);
+		}
+		if (nSatisfied >= awardActivityLength) {
+			// "3 -> 0", if there were 3 satisfied, gain 0 points since all points were already awarded
+			return scoreB;
+		}
+		// if no edge cases are in play, calculate and add points
+		return scoreB + awardActivity.get(nSatisfied) - awardActivity.get(nSatisfied - 1);
+				
 	}
 	
 	public int calculateCandidateScoreC(Request request) {

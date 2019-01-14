@@ -11,6 +11,8 @@ public class Student {
 	private List<Group> groups;
 	private List<Group> newGroups;
 	
+	
+	
 	public Student(int studentId) {
 		this.studentId = studentId;
 		

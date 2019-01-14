@@ -18,8 +18,8 @@ public class Request {
 	}
 	
 	public void apply(){
-		Student s = this.getStudent();
-		s.getNewGroups().set(s.getActivityIds().indexOf(this.getActivityId()), this.getRequestedGroup());
+		Student student = this.getStudent();
+		student.getNewGroups().set(student.getActivityIds().indexOf(this.getActivityId()), this.getRequestedGroup());
 		this.setSatisfied(true);
 	}
 	

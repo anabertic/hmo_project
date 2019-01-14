@@ -19,15 +19,18 @@ public class Evaluation {
 		this.state = state;
 		
 		this.calculateUpperLimit();
-		this.calculateCurrentScore();
+		this.calculateStartingScore();
 	}
+	
+	// ---- CALLED ONLY ONCE ----
 	
 	public void calculateUpperLimit() {
 		// full logic goes here
 		this.maxScore = 0;
 	}
 	
-	public void calculateCurrentScore() {
+	public void calculateStartingScore() {
+		
 		this.scoreA = this.calculateScoreA();
 		this.scoreB = this.calculateScoreB();
 		this.scoreC = this.calculateScoreC();
@@ -42,43 +45,71 @@ public class Evaluation {
 		
 	}
 	
-	public void stateUpdated() {
-		this.calculateCurrentScore();
-	}
-	
-	public int calculateCandidateStateScore(Request request) {
-
-		return this.calculateScoreA()
-				+ this.calculateScoreB()
-				+ this.calculateScoreC()
-				- this.calculateScoreD()
-				- this.calculateScoreE();
-		
-	}
-	
 	public int calculateScoreA() {
+		// based on state only
 		
 		return 0;
 	}
 	
 	public int calculateScoreB() {
+		// based on state only
 		
 		return 0;
 	}
 	
 	public int calculateScoreC() {
+		// based on state only
 		
 		return 0;
 	}
 	
 	public int calculateScoreD() {
+		// based on state only
 		
 		return 0;
 	}
 	
 	public int calculateScoreE() {
+		// based on state only
 		
 		return 0;
 	}
+	
+	// ---- CALLED ON EVERY REQUEST TAKEN INTO CONSIDERATION ----
+	
+	public int calculateCandidateStateScore(Request request) {
+
+		return 0;
+	}
+	
+	public int calculateCandidateScoreA(Request request) {
+		int scoreA = this.scoreA;
+		
+		
+		
+		return scoreA;
+	}
+	
+	public int calculateCandidateScoreB(Request request) {
+		
+		return 0;
+	}
+	
+	public int calculateCandidateScoreC(Request request) {
+		
+		return 0;
+	}
+	
+	public int calculateCandidateScoreD(Request request) {
+		
+		return 0;
+	}
+	
+	public int calculateCandidateScoreE(Request request) {
+		
+		return 0;
+	}
+	
+	// ---- GETTERS AND SETTERS ----
 	
 }

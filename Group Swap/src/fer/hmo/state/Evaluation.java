@@ -3,6 +3,7 @@ package fer.hmo.state;
 import java.util.ArrayList;
 import java.util.List;
 
+import fer.hmo.models.Group;
 import fer.hmo.models.Request;
 import fer.hmo.models.Student;
 
@@ -182,13 +183,31 @@ public class Evaluation {
 	}
 	
 	public int calculateCandidateScoreD(Request request) {
+		int scoreD = this.scoreD;
 		
-		return 0;
+		Group currentGroup = request.getCurrentGroup();
+		
+		if (currentGroup.getStudentsCnt() < currentGroup.getMinPreferred()) {
+			if (currentGroup.getStudentsCnt() + 1 >= currentGroup.getMinPreferred()); {
+				scoreD -= state.getMinmmaxPen();
+			}
+		}
+		
+		return scoreD;
 	}
 	
 	public int calculateCandidateScoreE(Request request) {
+		int scoreE = this.scoreE;
 		
-		return 0;
+		Group currentGroup = request.getCurrentGroup();
+		
+		if (currentGroup.getStudentsCnt() > currentGroup.getMinPreferred()) {
+			if (currentGroup.getStudentsCnt() - 1 <= currentGroup.getMaxPreferred()); {
+				scoreE -= state.getMinmmaxPen();
+			}
+		}
+		
+		return scoreE;
 	}
 	
 	// ---- GETTERS AND SETTERS ----

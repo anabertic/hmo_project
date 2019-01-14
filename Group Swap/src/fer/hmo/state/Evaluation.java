@@ -142,12 +142,43 @@ public class Evaluation {
 		}
 		// if no edge cases are in play, calculate and add points
 		return scoreB + awardActivity.get(nSatisfied) - awardActivity.get(nSatisfied - 1);
-				
 	}
 	
 	public int calculateCandidateScoreC(Request request) {
+		int scoreC = this.scoreC;
 		
-		return 0;
+		Student student = request.getStudent();
+		int activityId = request.getActivityId();
+		
+		// get award student bonus that is used when all activity swap requests of a student are satisfied
+		int awardStudent = state.getAwardStudent();
+		
+		// find how many activity student has
+		int nActivities = student.getActivityIds().size();
+		
+		// find how many activities are satisfied
+		int nSatisfiedActivities = student.getSatisfiedRequests().size();
+		
+		// if number of satisfied requests is already the same to the number of activities, points
+		// were already awarded
+		if (nActivities == nSatisfiedActivities) {
+			return scoreC;
+		}
+		
+		// find out if there is only one activity missing for bonus points
+		if (nActivities == nSatisfiedActivities + 1) {
+			// find out if the activity is already satisfied (that the request is trying to satisfy)
+			boolean alreadySatisfiedForThatActivity = student.existsSatisfiedRequestForActivity(activityId);
+			
+			if (alreadySatisfiedForThatActivity) {
+				return scoreC;
+			} else {
+				return scoreC + awardStudent;
+			}
+		}
+		
+		// if there is more than one missing request to satisfy all student activities, award no bonus points
+		return scoreC;
 	}
 	
 	public int calculateCandidateScoreD(Request request) {

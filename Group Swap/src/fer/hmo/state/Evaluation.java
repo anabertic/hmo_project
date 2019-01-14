@@ -1,6 +1,7 @@
 package fer.hmo.state;
 
 import fer.hmo.models.Request;
+import fer.hmo.models.Student;
 
 public class Evaluation {
 	
@@ -85,7 +86,19 @@ public class Evaluation {
 	public int calculateCandidateScoreA(Request request) {
 		int scoreA = this.scoreA;
 		
+		// get swap weight for (studentId,activityId) pair
+		Student student = request.getStudent();
+		int activityId = request.getActivityId();
+		int swapValue = this.state.getSwapByStudentActivity(student, activityId);
 		
+		// find if student has satisfied requests for that activityId
+		boolean alreadySatisfiedForThatActivity = student.existsSatisfiedRequestForActivity(activityId);
+		
+		// if it doesn't, increment scoreA by swap_value
+		// otherwise do nothing, score is already applied for that category
+		if (alreadySatisfiedForThatActivity) {
+			scoreA += swapValue;
+		}
 		
 		return scoreA;
 	}

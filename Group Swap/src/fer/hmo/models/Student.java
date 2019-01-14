@@ -1,7 +1,9 @@
 package fer.hmo.models;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Student {
 
@@ -11,7 +13,7 @@ public class Student {
 	private List<Group> groups;
 	private List<Group> newGroups;
 	
-	
+	private Map<Integer, Request> satisfiedRequests;
 	
 	public Student(int studentId) {
 		this.studentId = studentId;
@@ -20,6 +22,8 @@ public class Student {
 		this.swapWeights = new ArrayList<>();
 		this.groups = new ArrayList<>();
 		this.newGroups = new ArrayList<>();
+		
+		this.satisfiedRequests = new HashMap<>();
 	}
 	
 	public void add(int activityId, int swapWeight, Group group) {
@@ -28,6 +32,18 @@ public class Student {
 		this.groups.add(group);
 		
 		this.newGroups.add(new Group(group));
+	}
+	
+	public void applyRequest(Request request) {
+		this.satisfiedRequests.put(request.getActivityId(), request);
+	}
+	
+	public boolean existsSatisfiedRequestForActivity(int activityId) {
+		if (this.satisfiedRequests.get(activityId) != null) {
+			return true;
+		}
+		
+		return false;
 	}
 		
 	// ----- GETTERS AND SETTERS -----
@@ -71,13 +87,42 @@ public class Student {
 	public void setNewGroups(List<Group> newGroups) {
 		this.newGroups = newGroups;
 	}
+	
+	public Map<Integer, Request> getSatisfiedRequests() {
+		return satisfiedRequests;
+	}
 
+	public void setSatisfiedRequests(Map<Integer, Request> satisfiedRequests) {
+		this.satisfiedRequests = satisfiedRequests;
+	}
+
+	// ----- END GETTERS AND SETTERS -----
+	
 	@Override
 	public String toString() {
 		return "Student [studentId=" + studentId + "]";
 	}
 	
-	// ----- END GETTERS AND SETTERS -----
-	
-	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + studentId;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Student other = (Student) obj;
+		if (studentId != other.studentId)
+			return false;
+		return true;
+	}
+
 }

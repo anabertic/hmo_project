@@ -93,6 +93,12 @@ public class State {
 		return student;
 
 	}
+	
+	public int getSwapByStudentActivity(Student student, int activityId) {
+		int i = student.getActivityIds().indexOf(activityId);
+		
+		return student.getSwapWeights().get(i);
+	}
 
 	// GETTERS AND SETTERS
 

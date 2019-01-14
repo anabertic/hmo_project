@@ -3,63 +3,82 @@ package fer.hmo.state;
 import fer.hmo.models.Request;
 
 public class Evaluation {
+	
+	private State state;
+	
+	private int scoreA;
+	private int scoreB;
+	private int scoreC;
+	private int scoreD;
+	private int scoreE;
+	
+	private int currentScore;
+	private int maxScore;
+	
+	public Evaluation(State state) {
+		this.state = state;
+		
+		this.calculateUpperLimit();
+		this.calculateCurrentScore();
+	}
+	
+	public void calculateUpperLimit() {
+		// full logic goes here
+		this.maxScore = 0;
+	}
+	
+	public void calculateCurrentScore() {
+		this.scoreA = this.calculateScoreA();
+		this.scoreB = this.calculateScoreB();
+		this.scoreC = this.calculateScoreC();
+		this.scoreD = this.calculateScoreD();
+		this.scoreE = this.calculateScoreE();
+		
+		this.currentScore = this.scoreA
+				+ this.scoreB
+				+ this.scoreC
+				- this.scoreD
+				- this.scoreE;
+		
+	}
+	
+	public void stateUpdated() {
+		this.calculateCurrentScore();
+	}
+	
+	public int calculateCandidateStateScore(Request request) {
 
-	public static int scoreA(State state) {
+		return this.calculateScoreA()
+				+ this.calculateScoreB()
+				+ this.calculateScoreC()
+				- this.calculateScoreD()
+				- this.calculateScoreE();
+		
+	}
+	
+	public int calculateScoreA() {
 		
 		return 0;
 	}
 	
-	public static int scoreB(State state) {
+	public int calculateScoreB() {
 		
 		return 0;
 	}
 	
-	public static int scoreC(State state) {
+	public int calculateScoreC() {
 		
 		return 0;
 	}
 	
-	public static int scoreD(State state) {
+	public int calculateScoreD() {
 		
 		return 0;
 	}
 	
-	public static int scoreE(State state) {
+	public int calculateScoreE() {
 		
 		return 0;
 	}
-	
-	public static int maxScore(int instance) {
-		State state = new State(instance);
-		
-		return Evaluation.scoreA(state)
-				+ Evaluation.scoreB(state)
-				+ Evaluation.scoreC(state)
-				- Evaluation.scoreD(state)
-				- Evaluation.scoreE(state);
-		
-	}
-	
-	// NOT SURE ABOUT THIS
-	
-	public static void updateScore(State state,Request request){
-		updateScoreA(state,request);
-		//updateScoreB(state,request);
-		//updateScoreC(state,request);
-		//updateScoreD(state,request);
-		//updateScoreE(state,request);
-		
-	}
-	
-	public static void updateScoreA(State state, Request request){
-		int index = state.getStudents().indexOf(state.findStudentById(request.getStudent().getStudentId()));
-		int swapWeight = state.getStudents().get(index).getSwapWeights().get(index);
-		state.setScoreA(state.getScoreA()+swapWeight);
-	}
-	
-	public static void updateScoreD(State state, Request request){
-	
-	}
-	
 	
 }

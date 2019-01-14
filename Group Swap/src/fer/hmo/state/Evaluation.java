@@ -30,8 +30,45 @@ public class Evaluation {
 	// ---- CALLED ONLY ONCE ----
 	
 	public void calculateUpperLimit() {
-		// full logic goes here
-		this.maxScore = 0;
+		int upperScoreLimit = 0;
+		
+		// 1)
+		// upper limit of scoreA
+		// total sum of all swap weights
+		for (Student student : state.getStudents()) {
+			for (Integer swapWeight : student.getSwapWeights()) {
+				upperScoreLimit += swapWeight;
+			}
+		}
+		
+		// 2)
+		// upper limit of scoreB
+		// awardActivity[min(nActivities, awardActivity.size())] for every student
+		List<Integer> awardActivity = state.getAwardActivity();
+		for (Student student : state.getStudents()) {
+			int nActivities = student.getActivityIds().size();
+			
+			if (nActivities <= 0) {
+				continue;
+			}
+
+			upperScoreLimit += awardActivity.get(Math.min(nActivities, awardActivity.size()) - 1);
+		}
+		
+		// 3)
+		// upper limit of scoreC
+		// nStudents * awardStudent
+		upperScoreLimit += state.getStudents().size() * state.getAwardStudent();
+		
+		// 4)
+		// upper limit of scoreD
+		// 0, since it is to be deducted for the total score
+		
+		// 5)
+		// upper limit of scoreE
+		// 0, since it is to be deducted for the total score
+
+		this.maxScore = upperScoreLimit;
 	}
 	
 	public void calculateStartingScore() {

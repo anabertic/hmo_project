@@ -153,8 +153,29 @@ public class Evaluation {
 	// ---- CALLED ON EVERY REQUEST TAKEN INTO CONSIDERATION ----
 	
 	public int calculateCandidateStateScore(Request request) {
-
-		return 0;
+		
+		return this.calculateCandidateScoreA(request)
+				+ this.calculateCandidateScoreB(request)
+				+ this.calculateCandidateScoreC(request)
+				- this.calculateCandidateScoreD(request)
+				- this.calculateCandidateScoreE(request);
+		
+	}
+	
+	public void applyRequest(Request request) {
+		
+		this.scoreA = this.calculateCandidateScoreA(request);
+		this.scoreB = this.calculateCandidateScoreB(request);
+		this.scoreC = this.calculateCandidateScoreC(request);
+		this.scoreD = this.calculateCandidateScoreD(request);
+		this.scoreE = this.calculateCandidateScoreE(request);
+		
+		this.currentScore = this.scoreA
+							+ this.scoreB
+							+ this.scoreC
+							- this.scoreD
+							- this.scoreE;
+		
 	}
 	
 	public int calculateCandidateScoreA(Request request) {

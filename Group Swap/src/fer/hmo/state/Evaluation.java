@@ -300,7 +300,71 @@ public class Evaluation {
 		
 		return scoreE;
 	}
-	
+
 	// ---- GETTERS AND SETTERS ----
+	
+	public State getState() {
+		return state;
+	}
+
+	public void setState(State state) {
+		this.state = state;
+	}
+
+	public int getScoreA() {
+		return scoreA;
+	}
+
+	public void setScoreA(int scoreA) {
+		this.scoreA = scoreA;
+	}
+
+	public int getScoreB() {
+		return scoreB;
+	}
+
+	public void setScoreB(int scoreB) {
+		this.scoreB = scoreB;
+	}
+
+	public int getScoreC() {
+		return scoreC;
+	}
+
+	public void setScoreC(int scoreC) {
+		this.scoreC = scoreC;
+	}
+
+	public int getScoreD() {
+		return scoreD;
+	}
+
+	public void setScoreD(int scoreD) {
+		this.scoreD = scoreD;
+	}
+
+	public int getScoreE() {
+		return scoreE;
+	}
+
+	public void setScoreE(int scoreE) {
+		this.scoreE = scoreE;
+	}
+
+	public int getCurrentScore() {
+		return currentScore;
+	}
+
+	public void setCurrentScore(int currentScore) {
+		this.currentScore = currentScore;
+	}
+
+	public int getMaxScore() {
+		return maxScore;
+	}
+
+	public void setMaxScore(int maxScore) {
+		this.maxScore = maxScore;
+	}
 	
 }

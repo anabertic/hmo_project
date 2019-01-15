@@ -27,42 +27,20 @@ public class Main {
 		// –overlaps-file overlaps.csv
 		// –limits-file limits.csv
 		
-		
-		int timeout = Integer.parseInt(args[1]);
-		System.out.println(args[0] + " " + timeout);
-		System.out.println();
-		
-		String awardActivity = args[3];
-		System.out.println("award-activity " + awardActivity);
-		int awardStudent = Integer.parseInt(args[5]);
-		System.out.println("award-student " + awardStudent);
-		int minmaxPenalty = Integer.parseInt(args[7]);
-		System.out.println("minmax-penalty " + minmaxPenalty);
-		System.out.println();
-		
-		String studentsFile = args[9];
-		System.out.println("students-file " + studentsFile);
-		String requestsFile = args[11];
-		System.out.println("requests-file " + requestsFile);
-		String overlapsFile = args[13];
-		System.out.println("overlaps-file " + overlapsFile);
-		String limitsFile = args[15];
-		System.out.println("limits-file " + limitsFile);
-		System.out.println();
-		
-		String[] filePaths = new String[4];
-		filePaths[0] = studentsFile;
-		filePaths[1] = requestsFile;
-		filePaths[2] = overlapsFile;
-		filePaths[3] = limitsFile;
-		
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println("With ArgumentParser...");
 		ParsedArguments parsedArguments = ArgumentsParser.parseArguments(args);
+		System.out.println("Parsed arguments:");
+		System.out.println(parsedArguments);
+		System.out.println();
+		
 		int instance = 1;
-		State state = new State(parsedArguments,1);
+		State state = new State(parsedArguments, 1);
+		System.out.println("Starting state info:");
+		System.out.println("Max Score = " + state.getMaxScore());
+		System.out.println("Starting Score = " + state.getEvaluation().getCurrentScore());
+		System.out.println("Number of students: " + state.getStudents().size());
+		System.out.println("Number of groups: " + state.getGroups().size());
+		System.out.println("Number of requests: " + state.getRequests().size());
+		System.out.println();
 		//System.out.println(state);
 
 		GreedySearch greedySearch = new GreedySearch(state,10000);

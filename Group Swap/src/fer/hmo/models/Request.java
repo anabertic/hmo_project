@@ -107,6 +107,8 @@ public class Request {
 				+ "," + requestedGroup.getGroupId() + "," + satisfied;
 	}
 	
+
+	
 	
 	
 }

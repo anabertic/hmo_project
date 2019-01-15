@@ -78,30 +78,38 @@ public class State {
 	}
 
 	public int evaluateRequest(Request request) {
+		
+		// request checking transferred to isRequestValid method
+
+		return evaluation.calculateCandidateStateScore(request);
+	}
+	
+	public boolean isRequestValid(Request request){
 		// check if the request would not comply with any of the hard limits
 		//
 		// 1)
 		// check if request would put a group below the minimum student
 		// requirement
 		if (!request.getCurrentGroup().canRemoveStudent()) {
-			return Integer.MIN_VALUE;
+			return false;
 		}
 
 		// 2)
 		// check if request would put a group above the maximum student
 		// requirement
 		if (!request.getCurrentGroup().canAddStudent()) {
-			return Integer.MIN_VALUE;
+			return false;
 		}
 
 		// 3)
 		// check if the requested group overlaps with another group
 		// student already belongs in
 		if (request.getRequestedGroup().isOverlapping(request.getStudent().getGroups())) {
-			return Integer.MIN_VALUE;
+			return false;
 		}
-
-		return evaluation.calculateCandidateStateScore(request);
+		
+		return true;
+		
 	}
 
 	public void applyRequest(Request request) {
@@ -309,4 +317,13 @@ public class State {
 		return "Final score: " + score;
 	}
 
+	public ArrayList<Request> getNotSatisfiedRequests(){
+		ArrayList<Request> notSatisfiedRequests = new ArrayList<>();
+		for (Request request:this.requests){
+			if( !request.isSatisfied()){
+				notSatisfiedRequests.add(request);
+			}
+		}
+		return notSatisfiedRequests;
+	}
 }

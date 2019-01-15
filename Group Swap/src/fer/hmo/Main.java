@@ -62,7 +62,7 @@ public class Main {
 		System.out.println("With ArgumentParser...");
 		ParsedArguments parsedArguments = ArgumentsParser.parseArguments(args);
 		int instance = 1;
-		State state = new State(parsedArguments,2);
+		State state = new State(parsedArguments,1);
 		//System.out.println(state);
 
 		GreedySearch greedySearch = new GreedySearch(state,10000);

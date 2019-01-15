@@ -58,7 +58,7 @@ public class Request {
 	}
 	
 	public Group getCurrentGroup() {
-		return currentGroup;
+		return this.student.getGroups().get(student.getActivityIds().indexOf(this.activityId));
 	}
 
 	public void setCurrentGroup(Group currentGroup) {

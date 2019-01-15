@@ -17,6 +17,17 @@ public class GreedySearch {
 		this.maxIterations = maxIterations;
 	}
 
+	public void help() {
+		int count=0;
+		for (Request request : this.state.getNotSatisfiedRequests()) {
+			if (this.state.isRequestValid(request)){
+				count+=1;
+			}
+		}
+		System.out.println(this.state.getNotSatisfiedRequests().size());
+		System.out.println("cunt"+count);
+	}
+
 	public void search() {
 
 		int maxEvaluation;
@@ -26,12 +37,18 @@ public class GreedySearch {
 		for (int i = 0; i < maxIterations; i++) {
 			maxEvaluation = Integer.MIN_VALUE;
 			for (Request request : this.state.getNotSatisfiedRequests()) {
+				
 				evaluation = state.evaluateRequest(request);
+				//System.out.print(request);
+				//System.out.println("-> "+evaluation);
 				if (evaluation > maxEvaluation) {
 					maxEvaluation = evaluation;
 					maxRequest = request;
 				}
 			}
+			//System.out.println("chosen "+maxRequest+" -> "+maxEvaluation);
+
+			//System.out.println(this.state);
 			state.applyRequest(maxRequest);
 
 			if (state.getEvaluation().getCurrentScore() == state.getEvaluation().getMaxScore()) {

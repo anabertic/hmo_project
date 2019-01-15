@@ -90,6 +90,7 @@ public class State {
 		// 1)
 		// check if request would put a group below the minimum student
 		// requirement
+		//System.out.println("current "+request.getCurrentGroup());
 		if (!request.getCurrentGroup().canRemoveStudent()) {
 			return false;
 		}
@@ -97,7 +98,7 @@ public class State {
 		// 2)
 		// check if request would put a group above the maximum student
 		// requirement
-		if (!request.getCurrentGroup().canAddStudent()) {
+		if (!request.getRequestedGroup().canAddStudent()) {
 			return false;
 		}
 
@@ -111,9 +112,22 @@ public class State {
 		return true;
 		
 	}
+	
+	public boolean isStateValid(){
+		// check if state doesn't satisfy hard limits
+		for (Group group:this.getGroups()){
+			if (!group.isWithinHardLimits()){
+				return false;
+			}
+		}
+		
+		return true;
+		
+	}
 
 	public void applyRequest(Request request) {
 		// first, update evaluation score for new state
+
 		evaluation.applyRequest(request);
 
 		// then, update groups student counts that were involved in the request
@@ -122,16 +136,19 @@ public class State {
 
 		// update the Request object itself
 		request.apply();
+
 	}
 
 	public void updateGroupStudentsCnt(Request request) {
-		int groupIndexRequested = this.groups.indexOf(request.getRequestedGroup());
-		Group.addStudent(request.getRequestedGroup());
-		this.groups.set(groupIndexRequested, request.getRequestedGroup());
 
+		int groupIndexRequested = this.groups.indexOf(request.getRequestedGroup());
+		
+		Group.addStudent(this.groups.get(groupIndexRequested));
+		
 		int groupIndexCurrent = this.groups.indexOf(request.getCurrentGroup());
-		Group.removeStudent(request.getRequestedGroup());
-		this.groups.set(groupIndexCurrent, request.getCurrentGroup());
+		
+		Group.removeStudent(this.groups.get(groupIndexCurrent));
+
 	}
 
 	// HELPERS
@@ -298,6 +315,7 @@ public class State {
 	public void addRequest(Request request) {
 		this.requests.add(request);
 	}
+	
 
 	@Override
 	public String toString() {
@@ -314,7 +332,7 @@ public class State {
 		for (Request request : this.getRequests()) {
 			System.out.println(request);
 		}
-		return "Final score: " + score;
+		return "Final score: " + this.evaluation.getCurrentScore();
 	}
 
 	public ArrayList<Request> getNotSatisfiedRequests(){
@@ -326,4 +344,5 @@ public class State {
 		}
 		return notSatisfiedRequests;
 	}
+	
 }

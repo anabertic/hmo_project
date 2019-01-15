@@ -157,7 +157,9 @@ public class Evaluation {
 		
 		if (!state.isRequestValid(request)) 
 			return MIN_SCORE;
-
+		if (!state.isStateValid()){
+			return MIN_SCORE;
+		}
 		return this.calculateCandidateScoreA(request) + this.calculateCandidateScoreB(request)
 				+ this.calculateCandidateScoreC(request) - this.calculateCandidateScoreD(request)
 				- this.calculateCandidateScoreE(request);
@@ -167,6 +169,9 @@ public class Evaluation {
 	public int applyRequest(Request request) {
 		if (!state.isRequestValid(request)){
 			this.currentScore = MIN_SCORE;
+		}
+		if (!state.isStateValid()){
+			return MIN_SCORE;
 		}
 
 		else {

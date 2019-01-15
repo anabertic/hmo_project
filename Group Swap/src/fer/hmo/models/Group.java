@@ -98,12 +98,14 @@ public class Group {
 		return group.canRemoveStudent();
 	}
 	
-	public static void addStudent(Group group){
+	public static Group addStudent(Group group){
 			group.setStudentsCnt(group.getStudentsCnt()+1);
+			return group;
 	}
 	
-	public static void removeStudent(Group group){
+	public static Group removeStudent(Group group){
 		group.setStudentsCnt(group.getStudentsCnt()-1);
+		return group;
 	}
 	
 	

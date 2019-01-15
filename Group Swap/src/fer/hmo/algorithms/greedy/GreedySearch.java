@@ -25,10 +25,11 @@ public class GreedySearch {
 
 		for (int i = 0; i < maxIterations; i++) {
 			maxEvaluation = Integer.MIN_VALUE;
+			//Collections.shuffle(this.state.getRequests());
 			for (Request request : this.state.getRequests()) {
 				if (!request.isSatisfied()) {
 					evaluation = state.evaluateRequest(request);
-					if (evaluation > maxEvaluation) {
+					if (evaluation >= maxEvaluation) {
 						maxEvaluation = evaluation;
 						maxRequest = request;
 					}

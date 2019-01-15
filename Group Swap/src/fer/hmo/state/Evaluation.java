@@ -29,7 +29,7 @@ public class Evaluation {
 	
 	// ---- CALLED ONLY ONCE ----
 	
-	public void calculateUpperLimit() {
+	private void calculateUpperLimit() {
 		int upperScoreLimit = 0;
 		
 		// 1)
@@ -71,7 +71,7 @@ public class Evaluation {
 		this.maxScore = upperScoreLimit;
 	}
 	
-	public void calculateStartingScore() {
+	private void calculateStartingScore() {
 		
 		this.scoreA = this.calculateScoreA();
 		this.scoreB = this.calculateScoreB();
@@ -87,28 +87,28 @@ public class Evaluation {
 		
 	}
 	
-	public int calculateScoreA() {
+	private int calculateScoreA() {
 		// based on state only
 		
 		// always 0 at the start since no request has been fulfilled yet
 		return 0;
 	}
 	
-	public int calculateScoreB() {
+	private int calculateScoreB() {
 		// based on state only
 		
 		// always 0 at the start since no request has been fulfilled yet
 		return 0;
 	}
 	
-	public int calculateScoreC() {
+	private int calculateScoreC() {
 		// based on state only
 		
 		// always 0 at the start since no request has been fulfilled yet
 		return 0;
 	}
 	
-	public int calculateScoreD() {
+	private int calculateScoreD() {
 		// based on state only
 		
 		int scoreD = 0;
@@ -129,7 +129,7 @@ public class Evaluation {
 		return scoreD;
 	}
 	
-	public int calculateScoreE() {
+	private int calculateScoreE() {
 		// based on state only
 		
 		int scoreE = 0;
@@ -162,7 +162,7 @@ public class Evaluation {
 		
 	}
 	
-	public void applyRequest(Request request) {
+	public int applyRequest(Request request) {
 		
 		this.scoreA = this.calculateCandidateScoreA(request);
 		this.scoreB = this.calculateCandidateScoreB(request);
@@ -176,9 +176,11 @@ public class Evaluation {
 							- this.scoreD
 							- this.scoreE;
 		
+		return this.currentScore;
+		
 	}
 	
-	public int calculateCandidateScoreA(Request request) {
+	private int calculateCandidateScoreA(Request request) {
 		int scoreA = this.scoreA;
 		
 		// get swap weight for (studentId,activityId) pair
@@ -198,7 +200,7 @@ public class Evaluation {
 		return scoreA;
 	}
 	
-	public int calculateCandidateScoreB(Request request) {
+	private int calculateCandidateScoreB(Request request) {
 		int scoreB = this.scoreB;
 		
 		// get number of already satisfied requests for a given student
@@ -236,7 +238,7 @@ public class Evaluation {
 		return scoreB + awardActivity.get(nSatisfied) - awardActivity.get(nSatisfied - 1);
 	}
 	
-	public int calculateCandidateScoreC(Request request) {
+	private int calculateCandidateScoreC(Request request) {
 		int scoreC = this.scoreC;
 		
 		Student student = request.getStudent();
@@ -273,7 +275,7 @@ public class Evaluation {
 		return scoreC;
 	}
 	
-	public int calculateCandidateScoreD(Request request) {
+	private int calculateCandidateScoreD(Request request) {
 		int scoreD = this.scoreD;
 		
 		Group currentGroup = request.getCurrentGroup();
@@ -287,7 +289,7 @@ public class Evaluation {
 		return scoreD;
 	}
 	
-	public int calculateCandidateScoreE(Request request) {
+	private int calculateCandidateScoreE(Request request) {
 		int scoreE = this.scoreE;
 		
 		Group currentGroup = request.getCurrentGroup();

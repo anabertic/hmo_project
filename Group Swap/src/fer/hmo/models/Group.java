@@ -48,6 +48,16 @@ public class Group {
 		return false;
 	}
 	
+	public boolean isOverlapping(List<Group> groupList) {
+		for (Group otherGroup : groupList) {
+			if (this.isOverlapping(otherGroup)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
 	public static boolean isOverlapping(Group group1, Group group2) {
 		return group1.isOverlapping(group2);
 	}

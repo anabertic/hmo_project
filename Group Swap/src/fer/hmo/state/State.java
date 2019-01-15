@@ -24,28 +24,61 @@ public class State {
 	private String overlapsFile;
 	private String limitsFile;
 
-	private int maxScore;
-	private int scoreA;
-
 	private ArrayList<Group> groups = new ArrayList<Group>();
 	private ArrayList<Student> students = new ArrayList<Student>();
 	private ArrayList<Request> requests = new ArrayList<Request>();
+	
+	private Evaluation evaluation;
+	private int maxScore;
+	private int score;
 
 	public State(ParsedArguments args) throws IOException {
 		this.args = args;
+		
+		// save user-set parameters
 		this.timeout = args.getTimeout();
 		this.awardActivity = args.getAwardActivity();
 		this.awardStudent = args.getAwardStudent();
 		this.minmmaxPen = args.getMinmaxPenalty();
+		
+		// save instance data file paths
 		this.studentsFile = args.getStudentsFile();
 		this.requestsFile = args.getRequestsFile();
 		this.overlapsFile = args.getOverlapsFile();
 		this.limitsFile = args.getLimitsFile();
 
+		// parse instance data
 		ParsingUtils.parseInstance(this);
 		
-		this.scoreA = 0;
-
+		// initialize evaluation object
+		this.evaluation = new Evaluation(this);
+		this.maxScore = evaluation.getMaxScore();
+		this.score = evaluation.getCurrentScore();	// starting score after evaluation is initialized
+	}
+	
+	public int evaluateRequest(Request request) {
+		// check if the request would not comply with any of the hard limits
+		//
+		// 1)
+		// check if request would put a group below the minimum student requirement
+		if (!request.getCurrentGroup().canRemoveStudent()) {
+			return Integer.MIN_VALUE;
+		}
+		
+		// 2)
+		// check if request would put a group above the maximum student requirement
+		if (!request.getCurrentGroup().canAddStudent()) {
+			return Integer.MIN_VALUE;
+		}
+		
+		// 3)
+		// check if the requested group overlaps with another group
+		// student already belongs in
+		if (request.getRequestedGroup().isOverlapping(request.getStudent().getGroups()) {
+			return Integer.MIN_VALUE;
+		}
+		
+		return evaluation.calculateCandidateStateScore(request);
 	}
 	
 	public void swap(Request request){

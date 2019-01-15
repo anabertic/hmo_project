@@ -24,7 +24,7 @@ public class GreedySearch {
 		Request maxRequest = null;
 
 		for (int i = 0; i < maxIterations; i++) {
-			maxEvaluation = 0;
+			maxEvaluation = Integer.MIN_VALUE;
 			for (Request request : this.state.getRequests()) {
 				if (!request.isSatisfied()) {
 					evaluation = state.evaluateRequest(request);
@@ -34,9 +34,10 @@ public class GreedySearch {
 					}
 				}
 			}
-			System.out.print("Round " + i + ": ");
-			System.out.println("max evaluation = " + maxEvaluation);
 			state.applyRequest(maxRequest);
+			if (i%100 == 0){
+			System.out.print("Round " + i + ": ");
+			System.out.println("score: " + maxEvaluation);}
 		}
 
 	}

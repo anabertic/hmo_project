@@ -22,6 +22,7 @@ public class ParsingUtils {
 	}
 
 	public static void createGroups(State state) throws IOException {
+
 		BufferedReader br = new BufferedReader(new FileReader(state.getLimitsFile()));
 		BufferedReader br2 = new BufferedReader(new FileReader(state.getOverlapsFile()));
 		br.readLine();

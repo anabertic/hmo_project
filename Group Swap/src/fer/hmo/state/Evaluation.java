@@ -184,6 +184,7 @@ public class Evaluation {
 		int scoreA = this.scoreA;
 		
 		// get swap weight for (studentId,activityId) pair
+
 		Student student = request.getStudent();
 		int activityId = request.getActivityId();
 		int swapValue = this.state.getSwapByStudentActivity(student, activityId);

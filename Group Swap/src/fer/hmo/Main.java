@@ -61,10 +61,11 @@ public class Main {
 		System.out.println();
 		System.out.println("With ArgumentParser...");
 		ParsedArguments parsedArguments = ArgumentsParser.parseArguments(args);
-		State state = new State(parsedArguments);
+		int instance = 1;
+		State state = new State(parsedArguments,2);
 		//System.out.println(state);
 
-		GreedySearch greedySearch = new GreedySearch(state,1000000);
+		GreedySearch greedySearch = new GreedySearch(state,10000);
 		greedySearch.search();
 		//System.out.println(state);
 		System.out.println("Max possible score "+state.getMaxScore());

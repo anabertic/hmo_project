@@ -25,20 +25,21 @@ public class GreedySearch {
 
 		for (int i = 0; i < maxIterations; i++) {
 			maxEvaluation = Integer.MIN_VALUE;
-			//Collections.shuffle(this.state.getRequests());
+			Collections.shuffle(this.state.getRequests());
 			for (Request request : this.state.getRequests()) {
 				if (!request.isSatisfied()) {
 					evaluation = state.evaluateRequest(request);
-					if (evaluation >= maxEvaluation) {
+					if (evaluation > maxEvaluation) {
 						maxEvaluation = evaluation;
 						maxRequest = request;
 					}
 				}
+				
 			}
 			state.applyRequest(maxRequest);
 			if (i%100 == 0){
 			System.out.print("Round " + i + ": ");
-			System.out.println("score: " + maxEvaluation);}
+			System.out.println(", score: " + state.getEvaluation().getCurrentScore());}
 		}
 
 	}

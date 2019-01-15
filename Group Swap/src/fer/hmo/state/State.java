@@ -269,28 +269,25 @@ public class State {
 	}
 
 	
-	public void printState(){
-
-		for (Group g:this.getGroups()){
-			System.out.println("Group "+g.getGroupId());
-			System.out.println(g.getOverlap().toString());
-			System.out.println("students cnt "+g.getStudentsCnt());
+	@Override
+	public String toString() {
+		System.out.println("Groups:");
+		for (Group group:this.getGroups()){
+			System.out.println(group);
 		}
-		System.out.println();
-		for (Student s:this.getStudents()){
-			System.out.println("Student "+s.getStudentId());
-			System.out.println(s.getActivityIds().toString());
-			System.out.println(s.getSwapWeights().toString());
-			System.out.println(s.getGroups().toString());
-			System.out.println(s.getNewGroups().toString());
+		System.out.println("Students:");
+		for (Student student:this.getStudents()){
+			System.out.println(student);
 			
 		}
-		System.out.println();
-		for (Request r:this.getRequests()){
-			System.out.println("Request: ");
-			System.out.println(r.getStudent().toString());
-			System.out.println("current "+r.getCurrentGroup().toString());
-			System.out.println("requested "+r.getRequestedGroup().toString());
+		System.out.println("Requests:");
+		for (Request request:this.getRequests()){
+			System.out.println(request);
 		}
+		return "Final score: " + score;
 	}
+	
+	
+	
+	
 }

@@ -100,5 +100,13 @@ public class Request {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return student.getStudentId() + "," + activityId + "," + currentGroup.getGroupId()
+				+ "," + requestedGroup.getGroupId() + "," + satisfied;
+	}
+	
+	
 	
 }

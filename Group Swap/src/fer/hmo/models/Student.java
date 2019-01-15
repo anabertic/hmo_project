@@ -99,11 +99,6 @@ public class Student {
 	// ----- END GETTERS AND SETTERS -----
 	
 	@Override
-	public String toString() {
-		return "Student [studentId=" + studentId + "]";
-	}
-	
-	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -124,5 +119,20 @@ public class Student {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("");
+		for (int i = 0; i < this.getActivityIds().size();i++){
+			sb.append(studentId + "," + this.getActivityIds().get(i) 
+					+ "," + this.getSwapWeights().get(i)
+					+ "," + this.getGroups().get(i) .getGroupId()
+					+ "," + this.getNewGroups().get(i).getGroupId()+"\n");
+		}
+		sb.delete(sb.length()-1, sb.length());
+		return sb.toString();
+	}
+	
+	
 
 }

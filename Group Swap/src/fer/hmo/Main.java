@@ -3,6 +3,7 @@ package fer.hmo;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import fer.hmo.algorithms.greedy.GreedySearch;
 import fer.hmo.algorithms.random.RandomSearch;
 import fer.hmo.data.ParsingUtils;
 import fer.hmo.models.Group;
@@ -61,13 +62,11 @@ public class Main {
 		System.out.println("With ArgumentParser...");
 		ParsedArguments parsedArguments = ArgumentsParser.parseArguments(args);
 		State state = new State(parsedArguments);
-		
-		state.printState();
-		//System.out.println(parsedArguments);
+		System.out.println(state);
 
-		RandomSearch randomSearch = new RandomSearch(state);
-		randomSearch.search();
-		state.printState();
+		GreedySearch greedySearch = new GreedySearch(state,3);
+		greedySearch.search();
+		System.out.println(state);;
 		
 		
 	}

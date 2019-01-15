@@ -191,9 +191,11 @@ public class Group {
 
 	@Override
 	public String toString() {
-		return "GroupID: " + groupId + "";
+		return groupId + "," + studentsCnt + "," + min + ","
+				+ minPreferred + "," + max + "," + maxPreferred;
 	}
-	
+
+
 	
 	
 }

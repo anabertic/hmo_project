@@ -16,9 +16,9 @@ public class RandomSearch {
 	}
 	
 	public void search(){
-		Collections.shuffle(this.state.getRequests());
+		//Collections.shuffle(this.state.getRequests());
 		for(Request request:this.state.getRequests()){
-			state.swap(request);
+			System.out.println(state.evaluateRequest(request));
 		}
 	}
 	

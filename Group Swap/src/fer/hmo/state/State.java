@@ -74,23 +74,22 @@ public class State {
 		// 3)
 		// check if the requested group overlaps with another group
 		// student already belongs in
-		if (request.getRequestedGroup().isOverlapping(request.getStudent().getGroups()) {
+		if (request.getRequestedGroup().isOverlapping(request.getStudent().getGroups())) {
 			return Integer.MIN_VALUE;
 		}
 		
 		return evaluation.calculateCandidateStateScore(request);
 	}
 	
-	public void swap(Request request){
+	public void applyRequest(Request request) {
+		// first, update evaluation score for new state
+		evaluation.applyRequest(request);
 		
-		// TODO check if overlaps 
-		// TODO check if within hard limits
-		
-		request.apply();
-		
+		// then, update groups student counts that were involved in the request (current and new group)
 		this.updateGroupStudentsCnt(request);
-
-		Evaluation.updateScore(this, request);
+		
+		// update the Request object itself
+		request.apply();
 	}
 	
 	public void updateGroupStudentsCnt(Request request){
@@ -207,14 +206,6 @@ public class State {
 		this.maxScore = maxScore;
 	}
 
-	public int getScoreA() {
-		return scoreA;
-	}
-
-	public void setScoreA(int scoreA) {
-		this.scoreA = scoreA;
-	}
-	
 	public ArrayList<Group> getGroups() {
 		return groups;
 	}
@@ -237,6 +228,30 @@ public class State {
 
 	public void setRequests(ArrayList<Request> requests) {
 		this.requests = requests;
+	}
+	
+	public ParsedArguments getArgs() {
+		return args;
+	}
+
+	public void setArgs(ParsedArguments args) {
+		this.args = args;
+	}
+
+	public Evaluation getEvaluation() {
+		return evaluation;
+	}
+
+	public void setEvaluation(Evaluation evaluation) {
+		this.evaluation = evaluation;
+	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
 	}
 	
 	// ADDERS 

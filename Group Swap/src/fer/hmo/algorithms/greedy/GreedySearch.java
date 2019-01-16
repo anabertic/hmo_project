@@ -63,4 +63,16 @@ public class GreedySearch implements IAlgorithm {
 
 	}
 
+	@Override
+	public State start() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void printStatistics() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

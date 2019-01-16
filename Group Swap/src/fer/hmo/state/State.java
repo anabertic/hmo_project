@@ -179,6 +179,10 @@ public class State {
 
 		return student.getSwapWeights().get(i);
 	}
+	
+	public void dump() {
+		
+	}
 
 	// GETTERS AND SETTERS
 

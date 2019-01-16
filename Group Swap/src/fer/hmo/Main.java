@@ -32,7 +32,8 @@ public class Main {
 		System.out.println("Number of requests: " + state.getRequests().size());
 		
 		// init Algorithm of choice
-		//
+		IAlgorithm algorithm = null;
+		
 		/** Algorithm II
 		 * 
 		 * A simple greedy search of possible states. If caught in an impossible state from where every request takes
@@ -44,11 +45,11 @@ public class Main {
 		 * If a number of iterations or time limit is exceeded the algorithm stops.
 		 * If every request leads algorithm from possible to an impossible state, the algorithm stops.
 		 */
-		IAlgorithm greedySearch = new GreedySearch(state, -1);	// -1 as not to limit a number of iterations
+		algorithm = new GreedySearch(state, -1);	// -1 as not to limit a number of iterations
 		
 		
 		// start the algorithm
-		State finalState = IAlgorithm.start();
+		State finalState = algorithm.start();
 		
 		// print final state results to screen
 		System.out.println("");
@@ -56,6 +57,9 @@ public class Main {
 		System.out.println("Starting score = " + startingScore);
 		System.out.println("Final score = " + finalState.getScore());
 		System.out.println("Upper score limit = " + state.getMaxScore());
+		
+		// print algorithm statistics to screen
+		algorithm.printStatistics();
 		
 		// save results to file
 		finalState.dump();

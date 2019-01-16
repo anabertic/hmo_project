@@ -3,11 +3,12 @@ package fer.hmo.algorithms.greedy;
 import java.util.Collections;
 import java.util.Random;
 
+import fer.hmo.IAlgorithm;
 import fer.hmo.models.Request;
 import fer.hmo.models.Student;
 import fer.hmo.state.State;
 
-public class GreedySearch {
+public class GreedySearch implements IAlgorithm {
 
 	private State state;
 	private int maxIterations;

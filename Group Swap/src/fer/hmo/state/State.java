@@ -82,7 +82,7 @@ public class State {
 		this.score = evaluation.getCurrentScore(); // starting score after
 													// evaluation is initialized
 	}
-
+	
 	public int evaluateRequest(Request request) {
 		
 		// request checking transferred to isRequestValid method

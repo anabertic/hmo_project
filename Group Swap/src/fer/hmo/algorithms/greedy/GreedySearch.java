@@ -90,17 +90,13 @@ public class GreedySearch implements IAlgorithm {
 
 	@Override
 	public State start() {
+		// init time and evaluation score
 		long currentTime = System.currentTimeMillis();
-		Decision bestDecision = null;
-		System.out.println();
-		System.out.println(currentTime);
-		System.out.println(this.maxIterations);
+		this.maxEvalScore = this.currentScore;
 		
-		for (int i = 0; i < this.maxIterations; i++) {
-			System.out.println("in for");
-			System.out.println(currentTime);
-			System.out.println(this.endTime);
-			System.out.println("timeout: " + (currentTime > this.endTime));
+		Decision bestDecision = null;
+		
+		for (int i = 1; i <= this.maxIterations; i++) {
 			if (currentTime > this.endTime) {
 				this.stopReason = "timeout";
 				return this.state;
@@ -108,24 +104,15 @@ public class GreedySearch implements IAlgorithm {
 			
 			bestDecision = evaluateOptions();
 			if (bestDecision == null) {
-				this.stopReason = "";
+				this.stopReason = "no valid decisions";
 				return this.state;
 			}
-			System.out.println("best decision " + bestDecision + " ; best request " + bestDecision.getRequest());
 			// apply decision
-			System.out.println("best request:");
-			System.out.println("\t" + bestDecision.getRequest().getStudent().getStudentId());
-			System.out.println("\t" + bestDecision.getRequest().getActivityId());
-			System.out.println("\t" + bestDecision.getRequest().getRequestedGroup().getGroupId());
-			System.out.println("\t requst now satisfied: " + bestDecision.getRequest().isSatisfied());
 			this.state.applyRequest(bestDecision.getRequest());
-			System.out.println("applied request");
 			this.currentScore = bestDecision.getScore();
 			
-			System.out.println("current score: " + this.currentScore);
-			
-			if (i % 100 == 0) {
-				System.out.println("Step " + (i + 1) + ": " + "score: " + this.currentScore);
+			if (i % 100 == 0 || i == 1) {
+				System.out.println("Step " + i + ": " + "score: " + this.currentScore);
 			}
 		}
 		
@@ -148,10 +135,10 @@ public class GreedySearch implements IAlgorithm {
 			//decisions.add(new Decision(request, score));
 		}
 		
-		if (maxEvalRequest == null) {
+		if (this.maxEvalRequest == null) {
 			return null;
 		}
-		return new Decision(maxEvalRequest, maxEvalScore);
+		return new Decision(this.maxEvalRequest, this.maxEvalScore);
 	}
 
 	@Override

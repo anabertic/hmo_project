@@ -152,7 +152,7 @@ public class Evaluation {
 	}
 
 	// ---- CALLED ON EVERY REQUEST TAKEN INTO CONSIDERATION ----
-
+	
 	public int calculateCandidateStateScore(Request request) {
 		
 		if (!state.isRequestValid(request)) 

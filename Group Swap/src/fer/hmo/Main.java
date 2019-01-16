@@ -25,6 +25,7 @@ public class Main {
 		
 		// print out starting State
 		System.out.println("Starting state");
+		System.out.println("possible: " + state.isStateValid());
 		System.out.println("Upper score limit = " + state.getMaxScore());
 		int startingScore = state.getScore();
 		System.out.println("Starting score = " + startingScore);
@@ -46,7 +47,7 @@ public class Main {
 		 * If a number of iterations or time limit is exceeded the algorithm stops.
 		 * If every request leads algorithm from possible to an impossible state, the algorithm stops.
 		 */
-		algorithm = new GreedySearch(state, 10000);	// -1 as not to limit a number of iterations
+		algorithm = new GreedySearch(state, 25001);	// -1 as not to limit a number of iterations
 		
 		
 		// start the algorithm
@@ -55,6 +56,7 @@ public class Main {
 		// print final state results to screen
 		System.out.println("");
 		System.out.println("Final state:");
+		System.out.println("possible: " + finalState.isStateValid());
 		System.out.println("Starting score = " + startingScore);
 		System.out.println("Final score = " + finalState.getScore());
 		System.out.println("Upper score limit = " + state.getMaxScore());

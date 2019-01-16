@@ -1,4 +1,4 @@
-package fer.hmo;
+package fer.hmo.algorithms.utils;
 
 import fer.hmo.state.State;
 

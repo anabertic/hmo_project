@@ -3,6 +3,7 @@ package fer.hmo;
 import java.io.IOException;
 
 import fer.hmo.algorithms.greedy.GreedySearch;
+import fer.hmo.algorithms.utils.IAlgorithm;
 import fer.hmo.state.State;
 
 public class Main {
@@ -45,7 +46,7 @@ public class Main {
 		 * If a number of iterations or time limit is exceeded the algorithm stops.
 		 * If every request leads algorithm from possible to an impossible state, the algorithm stops.
 		 */
-		algorithm = new GreedySearch(state, -1);	// -1 as not to limit a number of iterations
+		algorithm = new GreedySearch(state, 10000);	// -1 as not to limit a number of iterations
 		
 		
 		// start the algorithm

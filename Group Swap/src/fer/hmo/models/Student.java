@@ -35,7 +35,13 @@ public class Student {
 	}
 	
 	public void applyRequest(Request request) {
+		// add request to the list of satisfied requests
 		this.satisfiedRequests.put(request.getActivityId(), request);
+		
+		// change student's current group (TODO: or maybe just put it to 'newGroups') (TODO: or both?)
+		int i = this.activityIds.indexOf(request.getActivityId());
+		this.groups.set(i, request.getRequestedGroup());
+		this.newGroups.set(i, request.getRequestedGroup());
 	}
 	
 	public boolean existsSatisfiedRequestForActivity(int activityId) {
@@ -44,6 +50,10 @@ public class Student {
 		}
 		
 		return false;
+	}
+	
+	public Request getSatisfiedRequestForActivity(int activityId) {
+		return this.satisfiedRequests.get(activityId);
 	}
 		
 	// ----- GETTERS AND SETTERS -----

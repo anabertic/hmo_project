@@ -28,6 +28,10 @@ public class State {
 	private ArrayList<Group> groups = new ArrayList<Group>();
 	private ArrayList<Student> students = new ArrayList<Student>();
 	private ArrayList<Request> requests = new ArrayList<Request>();
+	
+	// for help with algorithms
+	// since there is no need to evaluate requests that are already satisfied
+	private List<Request> unsatisfiedRequests;
 
 	private Evaluation evaluation;
 	private int maxScore;
@@ -69,6 +73,8 @@ public class State {
 
 		// parse instance data
 		ParsingUtils.parseInstance(this);
+		// At the beginning, no requests are satisfied. 'unsatisfiedRequests' list is then equal to the 'requests' list
+		this.unsatisfiedRequests = new ArrayList<Request>(this.requests);
 
 		// initialize evaluation object
 		this.evaluation = new Evaluation(this);
@@ -129,14 +135,29 @@ public class State {
 		// first, update evaluation score for new state
 
 		evaluation.applyRequest(request);
+		this.score = evaluation.getCurrentScore();
 
+		// UPDATE GROUP
 		// then, update groups student counts that were involved in the request
 		// (current and new group)
 		this.updateGroupStudentsCnt(request);
 
+		// UPDATE REQUEST
 		// update the Request object itself
-		request.apply();
-
+		Request nowUnsatisfiedRequest = request.apply();
+		
+		// UPDATE STUDENT
+		// update student's current group
+		request.getStudent().applyRequest(request);
+		
+		// remove and add request from and to 'unsatisfiedRequests' list
+		// first, remove request that was just satisfied
+		this.unsatisfiedRequests.remove(request);
+		// second, add request that became unsatisfied because student switched
+		// from group which he signed up for because of another request
+		if (nowUnsatisfiedRequest != null) {
+			this.unsatisfiedRequests.add(nowUnsatisfiedRequest);
+		}
 	}
 
 	public void updateGroupStudentsCnt(Request request) {
@@ -305,8 +326,16 @@ public class State {
 	public void setScore(int score) {
 		this.score = score;
 	}
+	
+	public List<Request> getUnsatisfiedRequests() {
+		return this.unsatisfiedRequests;
+	}
+	
+	public void setUnsatisfiedRequests(List<Request> unsatisfiedRequests) {
+		this.unsatisfiedRequests = unsatisfiedRequests;
+	}
 
-	// ADDERS
+	// ---- ADDERS ----
 
 	public void addGroup(Group group) {
 		this.groups.add(group);
@@ -320,6 +349,7 @@ public class State {
 		this.requests.add(request);
 	}
 	
+	// ---- UTILS ----
 
 	@Override
 	public String toString() {

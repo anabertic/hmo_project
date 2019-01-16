@@ -17,10 +17,21 @@ public class Request {
 		this.satisfied = false;
 	}
 	
-	public void apply(){
+	// returns request that just became unsatisfied, null if none
+	public Request apply(){
 		Student student = this.getStudent();
-		student.getNewGroups().set(student.getActivityIds().indexOf(this.getActivityId()), this.getRequestedGroup());
-		this.setSatisfied(true);
+		Request nowUnsatisfiedRequest = null;
+		
+		// find request that just became unsatisfied, if any
+		// important: do this before marking this request as satisfied, as the Student's
+		// 		'getSatisfiedRequestForActivity(int activityId)' method will be called in
+		//		order to determine which request became unsatisfied, if any
+		nowUnsatisfiedRequest = student.getSatisfiedRequestForActivity(this.activityId);
+
+		// mark this request as "satisfied"
+		this.satisfied = true;
+		
+		return nowUnsatisfiedRequest;
 	}
 	
 	// ----- GETTERS AND SETTERS -----

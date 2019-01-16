@@ -40,7 +40,7 @@ public class Group {
 		this.overlap.add(group);
 	}
 	
-	public boolean isOverlapping(Group group) {
+	public boolean existsOverlap(Group group) {
 		if (this.overlap.contains(group)) {
 			return true;
 		}
@@ -48,6 +48,26 @@ public class Group {
 		return false;
 	}
 	
+	public boolean existsOverlap(List<Group> groupList) {
+		for (Group otherGroup : groupList) {
+			if (this.existsOverlap(otherGroup)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	/*
+	public boolean isOverlapping(Group group) {
+		if (this.overlap.contains(group)) {
+			return true;
+		}
+		
+		return false;
+	}
+	*/
+	/*
 	public boolean isOverlapping(List<Group> groupList) {
 		for (Group otherGroup : groupList) {
 			if (this.isOverlapping(otherGroup)) {
@@ -58,8 +78,9 @@ public class Group {
 		return false;
 	}
 	
+	*/
 	public static boolean isOverlapping(Group group1, Group group2) {
-		return group1.isOverlapping(group2);
+		return group1.existsOverlap(group2);
 	}
 	
 	public boolean isWithinHardLimits() {

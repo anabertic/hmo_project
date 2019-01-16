@@ -75,7 +75,12 @@ public class Evaluation {
 
 	private void calculateStartingScore() {
 		
-
+		// if the starting state is invalid, return MIN_SCORE
+		if (!this.state.getIsStateValid()) {
+			this.currentScore = MIN_SCORE;
+			return;
+		}
+		
 		this.scoreA = this.calculateScoreA();
 		this.scoreB = this.calculateScoreB();
 		this.scoreC = this.calculateScoreC();
@@ -155,11 +160,14 @@ public class Evaluation {
 	
 	public int calculateCandidateStateScore(Request request) {
 		
-		if (!state.isRequestValid(request)) 
+		if (!state.isRequestValid(request)) { 
 			return MIN_SCORE;
+		}
+		/*
 		if (!state.isStateValid()){
 			return MIN_SCORE;
 		}
+		*/
 		return this.calculateCandidateScoreA(request) + this.calculateCandidateScoreB(request)
 				+ this.calculateCandidateScoreC(request) - this.calculateCandidateScoreD(request)
 				- this.calculateCandidateScoreE(request);

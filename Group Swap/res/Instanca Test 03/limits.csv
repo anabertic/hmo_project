@@ -1,0 +1,4 @@
+group_id,students_cnt,min,min_preferred,max,max_preferred
+1,1,0,0,100,100
+2,1,0,0,100,100
+3,0,0,0,100,100

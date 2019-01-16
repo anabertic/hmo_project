@@ -36,6 +36,8 @@ public class State {
 	private Evaluation evaluation;
 	private int maxScore;
 	private int score;
+	
+	private boolean isStateValid;
 
 	public State(ParsedArguments args, int instance) throws IOException {
 		this.args = args;
@@ -73,14 +75,17 @@ public class State {
 
 		// parse instance data
 		ParsingUtils.parseInstance(this);
+		// check if state is valid
+		this.isStateValid = this.isStartingStateValid();
 		// At the beginning, no requests are satisfied. 'unsatisfiedRequests' list is then equal to the 'requests' list
 		this.unsatisfiedRequests = new ArrayList<Request>(this.requests);
 
 		// initialize evaluation object
 		this.evaluation = new Evaluation(this);
 		this.maxScore = evaluation.getMaxScore();
-		this.score = evaluation.getCurrentScore(); // starting score after
+		this.score = evaluation.getCurrentScore();  // starting score after the
 													// evaluation is initialized
+		
 	}
 	
 	public int evaluateRequest(Request request) {
@@ -97,7 +102,7 @@ public class State {
 		// check if request would put a group below the minimum student
 		// requirement
 		//System.out.println("current "+request.getCurrentGroup());
-		if (!request.getCurrentGroup().canRemoveStudent()) {
+		if (!request.getStudent().getGroups().get(request.getStudent().getActivityIds().indexOf(request.getActivityId())).canRemoveStudent()) {
 			return false;
 		}
 
@@ -111,7 +116,12 @@ public class State {
 		// 3)
 		// check if the requested group overlaps with another group
 		// student already belongs in
+		/*
 		if (request.getRequestedGroup().isOverlapping(request.getStudent().getGroups())) {
+			return false;
+		}
+		*/
+		if (request.getRequestedGroup().existsOverlap(request.getStudent().getGroups())) {
 			return false;
 		}
 		
@@ -121,14 +131,36 @@ public class State {
 	
 	public boolean isStateValid(){
 		// check if state doesn't satisfy hard limits
-		for (Group group:this.getGroups()){
+		// this includes any group that has n_students < min_students
+		//		and any group that has n_students > max_students 
+		for (Group group : this.getGroups()){
 			if (!group.isWithinHardLimits()){
+				return false;
+			}
+		}
+		
+		// check if there is an overlap between groups for every student
+		for (Student student : this.getStudents()) {
+			if (student.existsGroupOverlap()) {
 				return false;
 			}
 		}
 		
 		return true;
 		
+	}
+	
+	public boolean isStartingStateValid() {
+		// check if state doesn't satisfy hard limits
+		// this includes any group that has n_students < min_students
+		//		and any group that has n_students > max_students 
+		for (Group group : this.getGroups()){
+			if (!group.isWithinHardLimits()){
+				return false;
+			}
+		}
+		
+		return true;
 	}
 
 	public void applyRequest(Request request) {
@@ -148,7 +180,7 @@ public class State {
 		
 		// UPDATE STUDENT
 		// update student's current group
-		request.getStudent().applyRequest(request);
+		request.getStudent().applyRequest(request, nowUnsatisfiedRequest);
 		
 		// remove and add request from and to 'unsatisfiedRequests' list
 		// first, remove request that was just satisfied
@@ -333,6 +365,14 @@ public class State {
 	
 	public void setUnsatisfiedRequests(List<Request> unsatisfiedRequests) {
 		this.unsatisfiedRequests = unsatisfiedRequests;
+	}
+	
+	public boolean getIsStateValid() {
+		return this.isStateValid;
+	}
+	
+	public void setIsStateValid(boolean isStateValid) {
+		this.isStateValid = isStateValid;
 	}
 
 	// ---- ADDERS ----

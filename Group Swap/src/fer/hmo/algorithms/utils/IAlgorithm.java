@@ -8,4 +8,6 @@ public interface IAlgorithm {
 	
 	public void printStatistics();
 	
+	public String getStopReason();
+	
 }

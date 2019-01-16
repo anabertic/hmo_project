@@ -94,15 +94,19 @@ public class GreedySearch implements IAlgorithm {
 		long currentTime = System.currentTimeMillis();
 		this.maxEvalScore = this.currentScore;
 		
+		// check if the starting state is a valid one
+		boolean isStateValid = this.state.getIsStateValid();
+		
 		Decision bestDecision = null;
 		
 		for (int i = 1; i <= this.maxIterations; i++) {
+			currentTime = System.currentTimeMillis();
 			if (currentTime > this.endTime) {
 				this.stopReason = "timeout";
 				return this.state;
 			}
 			
-			bestDecision = evaluateOptions();
+			bestDecision = this.evaluateOptions();
 			if (bestDecision == null) {
 				this.stopReason = "no valid decisions";
 				return this.state;
@@ -123,6 +127,8 @@ public class GreedySearch implements IAlgorithm {
 	private Decision evaluateOptions() {
 		List<Decision> decisions = new ArrayList<>();
 		
+		this.maxEvalScore = this.currentScore;
+		this.maxEvalRequest = null;
 		for (Request request : this.state.getUnsatisfiedRequests()) {
 			int score = this.state.evaluateRequest(request);
 			
@@ -145,6 +151,11 @@ public class GreedySearch implements IAlgorithm {
 	public void printStatistics() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public String getStopReason() {
+		return this.stopReason;
 	}
 
 }

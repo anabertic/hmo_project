@@ -34,9 +34,15 @@ public class Student {
 		this.newGroups.add(new Group(group));
 	}
 	
-	public void applyRequest(Request request) {
-		// add request to the list of satisfied requests
+	public void applyRequest(Request request, Request nowUnsatisfiedRequest) {
+		// add request to the map of satisfied requests
 		this.satisfiedRequests.put(request.getActivityId(), request);
+		// remove now unsatisfied request from the map of satisfied requests, if it exists
+		if (nowUnsatisfiedRequest != null) {
+			if (this.satisfiedRequests.get(nowUnsatisfiedRequest.getActivityId()) != null) {
+				this.satisfiedRequests.remove(nowUnsatisfiedRequest.getActivityId());
+			}
+		}
 		
 		// change student's current group (TODO: or maybe just put it to 'newGroups') (TODO: or both?)
 		int i = this.activityIds.indexOf(request.getActivityId());
@@ -54,6 +60,18 @@ public class Student {
 	
 	public Request getSatisfiedRequestForActivity(int activityId) {
 		return this.satisfiedRequests.get(activityId);
+	}
+	
+	public boolean existsGroupOverlap() {
+		for (int i = 0; i < this.groups.size() - 1; i++) {
+			for (int j = i + 1; j < this.groups.size(); j++) {
+				if (this.groups.get(i).existsOverlap(this.groups.get(j))) {
+					return true;
+				}
+			}
+		}
+		
+		return false;
 	}
 		
 	// ----- GETTERS AND SETTERS -----
